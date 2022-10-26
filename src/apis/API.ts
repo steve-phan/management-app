@@ -31,7 +31,7 @@ export interface IAddCommentProps {
   comment: IComment;
 }
 
-const baseURL = `http://localhost:2022`;
+const baseURL = `/.netlify/functions`;
 
 export class EmployeeAPI {
   static async getAllEmployees() {
@@ -51,7 +51,7 @@ export class EmployeeAPI {
   }
 
   static async signUp({ employeeSignUpInfo }: IFetchData) {
-    const response = await axios.post(`${baseURL}/account/signup`, {
+    const response = await axios.post(`${baseURL}/add-new-employee`, {
       employeeSignUpInfo,
     });
     return response.data;
