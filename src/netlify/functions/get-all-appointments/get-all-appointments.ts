@@ -4,7 +4,6 @@ import { AppointmentServices } from "../utils/services/appointments.services";
 
 export const handler: Handler = async (event, context) => {
   try {
-    console.log({ aaaaaaaaaaaaaaaaaa: event.headers });
     const { shopid, appointmentofmonth } = event.headers as unknown as {
       shopid: string;
       appointmentofmonth: string;

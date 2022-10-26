@@ -1,5 +1,7 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography } from "antd";
+import { ROLE } from "src/@types";
+import { useAppSelector } from "src/store/hooks";
 
 import { IEmployeeInfo } from "../../../apis/API";
 import { useSignUpEmployee } from "../../../hooks";
@@ -18,6 +20,7 @@ export const EmployeeSignUp = ({
   const { error, isLoading, onSubmitActiveEmployee } = useSignUpEmployee({
     type,
   });
+  const { role } = useAppSelector((state) => state.employee.activeEmployee);
   const [form] = Form.useForm();
 
   const onFinish = (values: IEmployeeInfo) => {
@@ -32,6 +35,23 @@ export const EmployeeSignUp = ({
       onFinish={onFinish}
       scrollToFirstError
     >
+      {role === ROLE.ROOT && (
+        <Form.Item
+          name="shopName"
+          label="ShopName"
+          rules={[
+            {
+              required: true,
+              message: "Please input the Shopname!",
+            },
+            {
+              ...noWhiteSpace,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      )}
       <Form.Item
         name="userName"
         label="UserName"

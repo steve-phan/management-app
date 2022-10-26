@@ -16,6 +16,7 @@ export const EmployeeColor = {
   [ROLE.EMPLOYEE]: "geekblue",
   [ROLE.MANAGER]: "green",
   [ROLE.CHEF]: "volcano",
+  [ROLE.ROOT]: "red",
 } as const;
 
 export const getActionColumn = (dispatch: Dispatch<AnyAction>) => ({
@@ -91,13 +92,9 @@ export const getColumnsEmployee = (
       dataIndex: "role",
       render: (_, { role }) => (
         <>
-          {role.map((tag) => {
-            return (
-              <Tag color={EmployeeColor[tag]} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
+          <Tag color={EmployeeColor[role]} key={role}>
+            {role.toUpperCase()}
+          </Tag>
         </>
       ),
     },

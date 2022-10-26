@@ -12,8 +12,9 @@ export interface IEmployeeInfo extends IEmployeeSignInInfo {
   lastName: string;
   firstName: string;
   address: string;
-  role: TROLE[];
+  role: TROLE;
   _id: string;
+  shopId?: string;
 }
 export interface IFetchData {
   employeeSignUpInfo: IEmployeeInfo;

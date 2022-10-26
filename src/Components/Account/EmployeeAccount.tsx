@@ -13,11 +13,11 @@ export const EmployeeAccount: React.FC = () => {
       children: <EmployeeSignIn />,
     },
 
-    {
-      title: "Registration",
-      icon: <UserOutlined />,
-      children: <EmployeeSignUp />,
-    },
+    // {
+    //   title: "Registration",
+    //   icon: <UserOutlined />,
+    //   children: <EmployeeSignUp />,
+    // },
   ];
   return (
     <div

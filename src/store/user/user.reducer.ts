@@ -10,7 +10,7 @@ const activeEmployeeDefault: Omit<IActiveEmployee, "password"> = {
   firstName: "",
   lastName: "",
   address: "",
-  role: [ROLE.EMPLOYEE],
+  role: ROLE.EMPLOYEE,
   _id: "",
 };
 

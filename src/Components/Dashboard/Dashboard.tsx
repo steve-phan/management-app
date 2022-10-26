@@ -32,7 +32,6 @@ export const Dashboard = () => {
     });
 
   const { data, isLoading } = useQuery(["checkAuth"], async () => {
-    console.log(getCurrentMonth());
     return await axios.get("/.netlify/functions/get-all-appointments", {
       headers: {
         shopId: "gao-vegan0410940",
@@ -40,8 +39,6 @@ export const Dashboard = () => {
       },
     });
   });
-
-  console.log({ data });
 
   if (!isEmployeeLogin) {
     return <EmployeeAccount />;

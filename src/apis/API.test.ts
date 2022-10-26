@@ -26,7 +26,7 @@ describe("EmployeeAPI", () => {
       email: "pvn2022@gmail.com",
       address: "Berliner str 2, 10101",
       password: "verySecretPass",
-      role: [ROLE.EMPLOYEE],
+      role: ROLE.EMPLOYEE,
       _id: "amazingID",
     };
     it("should return a SUCCESS message", async () => {

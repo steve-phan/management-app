@@ -1,4 +1,5 @@
 import { Col, Row, Tag } from "antd";
+import { ROLE } from "src/@types";
 
 import { EmployeeAvatar } from "src/Components/Account/EmployeeAvatar/EmployeeAvatar";
 import { EmployeeColor } from "src/Components/Employees/Employees.helpers";
@@ -33,19 +34,15 @@ export const EmployeeDetailsHeader = () => {
             margin: 0,
           }}
         >
-          {role.map((tag) => {
-            return (
-              <Tag
-                color={EmployeeColor[tag]}
-                key={tag}
-                style={{
-                  fontSize: "8px",
-                }}
-              >
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
+          <Tag
+            color={EmployeeColor[role]}
+            key={role}
+            style={{
+              fontSize: "8px",
+            }}
+          >
+            {role.toUpperCase()}
+          </Tag>
           <span> {address.split(" ").slice(-1)[0]}</span>
         </p>
       </Col>

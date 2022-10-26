@@ -9,8 +9,9 @@ export const employeeSchema = new Schema({
   lastName: { type: String, required: true },
   firstName: { type: String, required: true },
   address: String,
-  role: [{ type: String, default: ROLE.EMPLOYEE }],
+  role: { type: String, default: ROLE.EMPLOYEE },
   createdDate: { type: Date, default: Date.now },
+  shopId: String,
 });
 
 export default mongoose.model("Employee", employeeSchema);

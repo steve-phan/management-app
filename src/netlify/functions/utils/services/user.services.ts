@@ -46,10 +46,8 @@ export class UserServices {
   }) {
     const defaultDb = await connectMongoDB();
 
-    const shopDb = defaultDb.connection.useDb(
-      employeeSignUpInfo?.shopId || "shopDemoId"
-    );
-    const Employee = shopDb.model("Employee", employeeSchema);
+    const employeesDb = defaultDb.connection.useDb("all-employees");
+    const Employee = employeesDb.model("Employee", employeeSchema);
 
     const existUser = await Employee.findOne({
       $or: [
@@ -62,7 +60,8 @@ export class UserServices {
     }
     const user = new Employee({
       ...employeeSignUpInfo,
-      role: [ROLE.EMPLOYEE],
+      role: ROLE.EMPLOYEE,
+      shopId: employeeSignUpInfo?.shopId || "shopDemoId",
     });
     user.password = bcrypt.hashSync(employeeSignUpInfo.password, 10);
     await user.save();

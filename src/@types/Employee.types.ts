@@ -1,4 +1,5 @@
 export const ROLE = {
+  ROOT: "ROOT",
   CHEF: "CHEF",
   MANAGER: "MANAGER",
   EMPLOYEE: "EMPLOYEE",
@@ -10,7 +11,7 @@ export interface IEmployee {
   name: string;
   email: string;
   address: string;
-  role: TROLE[];
+  role: TROLE;
   action?: string;
 }
 

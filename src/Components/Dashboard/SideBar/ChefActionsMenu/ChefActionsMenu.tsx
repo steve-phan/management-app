@@ -13,7 +13,7 @@ export const ChefActionsMenu = () => {
   const dispatch = useAppDispatch();
   const { role } = useAppSelector((state) => state.employee.activeEmployee);
 
-  if (!role.includes(ROLE.CHEF)) {
+  if (role !== ROLE.CHEF) {
     return null;
   }
 
