@@ -1,7 +1,7 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button, Upload } from "antd";
 
-import { DashBoardModal } from "src/Components/shared/DashBoardModal/DashBoardModal";
+import { DashBoardModal } from "src/Components/shared/UI/DashBoardModal/DashBoardModal";
 import { useUploadCSVFileEmployee } from "src/hooks";
 import { toggleUploadCSVFILEEMPLOYEEModal } from "src/store";
 

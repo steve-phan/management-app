@@ -2,7 +2,7 @@ import { Row } from "antd";
 import { CalendarOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 
 import { useAppDispatch, useAppSelector } from "src/store/hooks";
-import { ButtonWithIcon } from "src/Components/shared/ButtonWithIcon/ButtonWithIcon";
+import { ButtonWithIcon } from "src/Components/shared/UI/ButtonWithIcon/ButtonWithIcon";
 import {
   toggleAddEmployeeModal,
   toggleUploadCSVFILEEMPLOYEEModal,

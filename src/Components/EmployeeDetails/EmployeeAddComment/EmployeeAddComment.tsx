@@ -2,7 +2,7 @@ import { Avatar, Comment } from "antd";
 import { useMemo } from "react";
 
 import { getRandomAvatarURL } from "src/Components/Employees/Employees.helpers";
-import { Editor } from "src/Components/shared/Editor/Editor";
+import { Editor } from "src/Components/shared/UI/Editor/Editor";
 import { useEmployeeAddComment } from "src/hooks";
 import { useAppSelector } from "src/store/hooks";
 

@@ -15,6 +15,7 @@ import {
 import { mappingDashBoardPages } from "./Dashboard.helpers";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { getCurrentMonth } from "../shared/custom-dayjs";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -31,9 +32,11 @@ export const Dashboard = () => {
     });
 
   const { data, isLoading } = useQuery(["checkAuth"], async () => {
+    console.log(getCurrentMonth());
     return await axios.get("/.netlify/functions/get-all-appointments", {
       headers: {
         shopId: "gao-vegan0410940",
+        appointmentOfMonth: getCurrentMonth(),
       },
     });
   });

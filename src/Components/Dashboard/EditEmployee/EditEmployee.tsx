@@ -1,4 +1,4 @@
-import { DashBoardModal } from "src/Components/shared/DashBoardModal/DashBoardModal";
+import { DashBoardModal } from "src/Components/shared/UI/DashBoardModal/DashBoardModal";
 import { toggleEditEmployeeModal } from "src/store";
 
 import { EditEableForm } from "./EditEableForm";

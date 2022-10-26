@@ -1,6 +1,6 @@
 import { EmployeeSignUp } from "src/Components/Account/EmployeeSignUp/EmployeeSignUp";
 import { SignUpType } from "src/Components/Account/EmployeeSignUp/EmployeeSignUp.helpers";
-import { DashBoardModal } from "src/Components/shared/DashBoardModal/DashBoardModal";
+import { DashBoardModal } from "src/Components/shared/UI/DashBoardModal/DashBoardModal";
 import { toggleAddEmployeeModal } from "src/store";
 
 export const AddEmployee = ({ open }: { open: boolean }) => {

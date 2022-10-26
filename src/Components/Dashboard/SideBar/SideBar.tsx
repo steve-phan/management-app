@@ -1,7 +1,7 @@
 import { LoginOutlined } from "@ant-design/icons";
 import { Row, Divider } from "antd";
 
-import { ButtonWithIcon } from "src/Components/shared/ButtonWithIcon/ButtonWithIcon";
+import { ButtonWithIcon } from "src/Components/shared/UI/ButtonWithIcon/ButtonWithIcon";
 import { setSingOutActiveEmployee } from "src/store";
 import { useAppDispatch } from "src/store/hooks";
 
