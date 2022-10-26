@@ -13,8 +13,8 @@ import {
 } from "src/store";
 
 export const EmployeeColor = {
-  [ROLE.EINKÄUFER]: "geekblue",
-  [ROLE.VERKÄUFER]: "green",
+  [ROLE.EMPLOYEE]: "geekblue",
+  [ROLE.MANAGER]: "green",
   [ROLE.CHEF]: "volcano",
 } as const;
 

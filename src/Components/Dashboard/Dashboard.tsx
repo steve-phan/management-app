@@ -13,6 +13,8 @@ import {
   headerLogoStyles,
 } from "./Dashboard.styles";
 import { mappingDashBoardPages } from "./Dashboard.helpers";
+import { useQuery } from "react-query";
+import axios from "axios";
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -27,6 +29,16 @@ export const Dashboard = () => {
         dashboardPage: state.dashboard.dashboardPage,
       };
     });
+
+  const { data, isLoading } = useQuery(["checkAuth"], async () => {
+    return await axios.get("/.netlify/functions/get-all-appointments", {
+      headers: {
+        shopId: "gao-vegan0410940",
+      },
+    });
+  });
+
+  console.log({ data });
 
   if (!isEmployeeLogin) {
     return <EmployeeAccount />;

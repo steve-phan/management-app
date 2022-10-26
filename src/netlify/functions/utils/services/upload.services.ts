@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
-import { parse } from "csv-parse/sync";
-import bcrypt from "bcryptjs";
+// import { parse } from "csv-parse/sync";
+import * as bcrypt from "bcryptjs";
 
 import User from "../models/user.model";
 
@@ -27,20 +27,20 @@ const headers = [
   "Rolle",
 ];
 export class UploadServices {
-  static async readCSVFile(fileName: string) {
-    const pathName = path.resolve(__dirname, `../../uploads/${fileName}`);
-    const fileContent = fs.readFileSync(pathName, { encoding: "utf8" });
-    const fileContentData = (await parse(fileContent, {
-      delimiter: ";",
-      columns: headers,
-    })) as IColums[];
+  // static async readCSVFile(fileName: string) {
+  //   const pathName = path.resolve(__dirname, `../../uploads/${fileName}`);
+  //   const fileContent = fs.readFileSync(pathName, { encoding: "utf8" });
+  //   const fileContentData = (await parse(fileContent, {
+  //     delimiter: ";",
+  //     columns: headers,
+  //   })) as IColums[];
 
-    fileContentData.shift();
+  //   fileContentData.shift();
 
-    await this.writeEmloyeesToDB(fileContentData);
+  //   await this.writeEmloyeesToDB(fileContentData);
 
-    return await User.find().select("-password");
-  }
+  //   return await User.find().select("-password");
+  // }
 
   static async writeEmloyeesToDB(fileContentData: IColums[]) {
     const mappedContentData = fileContentData.map((item, index) => {

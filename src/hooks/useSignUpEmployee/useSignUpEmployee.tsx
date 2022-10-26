@@ -46,7 +46,7 @@ export const useSignUpEmployee = ({ type }: { type: TSignUpBtn }) => {
         dispatch(
           setActiveEmployee({
             ...employeeSignUpInfo,
-            role: [ROLE.VERKÄUFER],
+            role: [ROLE.EMPLOYEE],
           })
         );
       } else {

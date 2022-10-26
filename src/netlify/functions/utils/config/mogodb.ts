@@ -2,9 +2,6 @@ import mongoose from "mongoose";
 
 let conn: typeof mongoose | null = null;
 
-const url =
-  "mongodb+srv://teddy:a3AZ8KkRvxmfFwP@cluster0.nanpu.mongodb.net/?retryWrites=true&w=majority";
-
 export const connectMongoDB = async () => {
   try {
     // await mongoose.connect(process.env.MONGO_URI!);

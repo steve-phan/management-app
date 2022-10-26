@@ -1,2 +1,4 @@
+[build]
+  base = "src/" 
 [functions]
   included_files = ["utils/**"]

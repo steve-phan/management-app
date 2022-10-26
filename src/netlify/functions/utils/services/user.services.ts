@@ -1,23 +1,13 @@
-import bcrypt from "bcryptjs";
+import * as bcrypt from "bcryptjs";
 import { Model } from "mongoose";
+import {
+  IEmployeeInfo,
+  IEmployeeSignInInfo,
+  ROLE,
+} from "src/@types/Employee.types";
 import { connectMongoDB } from "../config/mogodb";
 
-import User, { employeeSchema, ROLE } from "../models/user.model";
-
-type TROLE = keyof typeof ROLE;
-export interface IEmployeeSignInInfo {
-  userName: string;
-  password: string;
-  shopId?: string;
-}
-
-export interface IEmployeeInfo extends IEmployeeSignInInfo {
-  email: string;
-  lastName: string;
-  firstName: string;
-  address: string;
-  role: TROLE[];
-}
+import User, { employeeSchema } from "../models/user.model";
 
 export class UserServices {
   static async signIn({
@@ -77,7 +67,7 @@ export class UserServices {
     user.password = bcrypt.hashSync(employeeSignUpInfo.password, 10);
     await user.save();
 
-    return await this.getAllEmployees(Employee);
+    return await this.getAllEmployees({ Model: Employee });
   }
   static async deleteEmployee({
     email,
@@ -91,7 +81,7 @@ export class UserServices {
     const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
     const Employee = shopDb.model("Employee", employeeSchema);
     await Employee.deleteOne({ email });
-    return await this.getAllEmployees(Employee);
+    return await this.getAllEmployees({ Model: Employee });
   }
 
   static async editEmployee({
@@ -111,10 +101,22 @@ export class UserServices {
     const Employee = shopDb.model("Employee", employeeSchema);
     await Employee.deleteOne({ email: employeeSignUpInfo.email });
 
-    return await this.getAllEmployees(Employee);
+    return await this.getAllEmployees({ Model: Employee });
   }
 
-  static async getAllEmployees(Model: Model<any>) {
+  static async getAllEmployees({
+    Model,
+    shopId,
+  }: {
+    Model?: Model<any>;
+    shopId?: string;
+  }) {
+    if (!Model) {
+      const defaultDb = await connectMongoDB();
+      const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
+      const Employee = shopDb.model("Employee", employeeSchema);
+      return await Employee.find().select("-password");
+    }
     const allEmployees = await Model.find().select("-password");
     return allEmployees;
   }

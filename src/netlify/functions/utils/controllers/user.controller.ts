@@ -44,7 +44,8 @@ export class UserControler {
     next: NextFunction
   ) {
     try {
-      const users = await UserServices.getAllEmployees();
+      const { shopId } = JSON.parse(req.body);
+      const users = await UserServices.getAllEmployees({ shopId });
       res.status(200).json({ message: "SUCCESS", users });
     } catch (error) {
       next(error);
