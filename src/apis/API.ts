@@ -35,8 +35,12 @@ export interface IAddCommentProps {
 const baseURL = `/.netlify/functions`;
 
 export class EmployeeAPI {
-  static async getAllEmployees() {
-    const response = await axios.get(`${baseURL}/account/get-all-employees`);
+  static async getAllEmployees(shopId: string) {
+    const response = await axios.get(`${baseURL}/get-all-employees`, {
+      headers: {
+        shopId: shopId,
+      },
+    });
     return response.data;
   }
 
@@ -45,7 +49,7 @@ export class EmployeeAPI {
   }: {
     employeeSignInInfo: IEmployeeSignInInfo;
   }) {
-    const response = await axios.post(`${baseURL}/account/signin`, {
+    const response = await axios.post(`${baseURL}/signin-employee`, {
       employeeSignInInfo,
     });
     return response.data;

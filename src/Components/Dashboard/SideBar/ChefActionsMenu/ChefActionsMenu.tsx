@@ -13,20 +13,20 @@ export const ChefActionsMenu = () => {
   const dispatch = useAppDispatch();
   const { role } = useAppSelector((state) => state.employee.activeEmployee);
 
-  if (role !== ROLE.CHEF) {
+  if (role === ROLE.EMPLOYEE) {
     return null;
   }
 
   return (
     <Row gutter={[0, 12]}>
-      <ButtonWithIcon
+      {/* <ButtonWithIcon
         icon={<CloudUploadOutlined />}
         onClick={() => {
           dispatch(toggleUploadCSVFILEEMPLOYEEModal(true));
         }}
       >
         Upload Employee file?
-      </ButtonWithIcon>
+      </ButtonWithIcon> */}
       <ButtonWithIcon
         icon={<EditOutlined />}
         onClick={() => {

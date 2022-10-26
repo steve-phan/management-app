@@ -7,15 +7,19 @@ import { useAppDispatch, useAppSelector } from "src/store/hooks";
 
 export const useGetAllEmployees = () => {
   const dispatch = useAppDispatch();
-  const { employees, roles } = useAppSelector((state) => {
+  const { employees, roles, shopId } = useAppSelector((state) => {
     return {
       employees: state.employee.allEmployees,
       roles: state.employee.activeEmployee.role,
+      shopId: state.employee.activeEmployee.shopId,
     };
   });
-  const { data, isLoading } = useQuery(["getAllEmployees", employees], () =>
-    EmployeeAPI.getAllEmployees()
-  );
+  const { data, isLoading } = useQuery(["getAllEmployees", employees], () => {
+    if (shopId) {
+      return EmployeeAPI.getAllEmployees(shopId);
+    }
+  });
+  console.log({ data });
 
   useEffect(() => {
     if (data) {

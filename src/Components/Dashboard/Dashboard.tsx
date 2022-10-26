@@ -43,7 +43,6 @@ export const Dashboard = () => {
   if (!isEmployeeLogin) {
     return <EmployeeAccount />;
   }
-  console.log({ dashboardPage });
   return (
     <Layout
       style={{

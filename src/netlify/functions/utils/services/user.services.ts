@@ -6,6 +6,7 @@ import {
   ROLE,
 } from "src/@types/Employee.types";
 import { connectMongoDB } from "../config/mogodb";
+import { shopinfoSchema } from "../models/shopinfo.model";
 
 import User, { employeeSchema } from "../models/user.model";
 
@@ -17,9 +18,7 @@ export class UserServices {
   }) {
     const defaultDb = await connectMongoDB();
 
-    const shopDb = defaultDb.connection.useDb(
-      employeeSignInInfo?.shopId || "shopDemoId"
-    );
+    const shopDb = defaultDb.connection.useDb("all-employees");
     const Employee = shopDb.model("Employee", employeeSchema);
 
     const user = await Employee.findOne({
@@ -30,8 +29,12 @@ export class UserServices {
       bcrypt.compareSync(employeeSignInInfo.password, user.password)
     ) {
       const { password, ...userInfo } = user.toObject();
+      const shopInfo = (await this.getAllShopsInfo()).find(
+        ({ shopId }) => shopId === userInfo.shopId
+      );
       return {
         ...userInfo,
+        shopInfo,
       };
     } else {
       throw `UserName or Password is wrong, please try again!`;
@@ -112,11 +115,18 @@ export class UserServices {
   }) {
     if (!Model) {
       const defaultDb = await connectMongoDB();
-      const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
+      const shopDb = defaultDb.connection.useDb("all-employees");
       const Employee = shopDb.model("Employee", employeeSchema);
       return await Employee.find().select("-password");
     }
     const allEmployees = await Model.find().select("-password");
     return allEmployees;
+  }
+
+  static async getAllShopsInfo() {
+    const defaultDb = await connectMongoDB();
+    const shopDb = defaultDb.connection.useDb("shopnames");
+    const Employee = shopDb.model("shopinfos", shopinfoSchema);
+    return (await Employee.find()).map((shopinfo) => shopinfo.toObject());
   }
 }

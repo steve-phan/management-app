@@ -23,7 +23,7 @@ export const SideBar = () => {
       <div>
         <SideBarHeader />
         <Divider style={{ background: "#cecece" }} />
-        <EmployeeActionsMenu />
+        {/* <EmployeeActionsMenu /> */}
         <ChefActionsMenu />
       </div>
       <Row>

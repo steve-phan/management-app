@@ -13,7 +13,7 @@ describe("EmployeeAPI", () => {
       mockedAxios.get.mockResolvedValue({
         data: [{ userName: "perterson" }, { userName: "steve" }],
       });
-      const users = await EmployeeAPI.getAllEmployees();
+      const users = await EmployeeAPI.getAllEmployees("hello-world");
       expect(users.length).toBe(2);
     });
   });
