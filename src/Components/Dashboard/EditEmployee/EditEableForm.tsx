@@ -1,4 +1,5 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Select } from "antd";
+import { ROLE } from "src/@types";
 
 import { IEmployeeInfo } from "src/apis/API";
 import { noWhiteSpace } from "src/Components/Account/EmployeeSignUp/EmployeeSignUp.helpers";
@@ -12,6 +13,8 @@ export const EditEableForm = () => {
   const onFinish = (values: IEmployeeInfo) => {
     onSubmitEditEmployee(values);
   };
+
+  const { ROOT, ...roleWithoutRoot } = ROLE;
 
   return (
     <>
@@ -53,6 +56,20 @@ export const EditEableForm = () => {
           ]}
         >
           <Input disabled />
+        </Form.Item>
+        <Form.Item
+          name="role"
+          label="Role"
+          rules={[{ required: true }]}
+          className="edit_role"
+        >
+          <Select style={{ width: 160 }}>
+            {Object.keys(roleWithoutRoot).map((role, index) => (
+              <Select.Option value={role} key={index}>
+                {role}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         <Form.Item
           name="firstName"

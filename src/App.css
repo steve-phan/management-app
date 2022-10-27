@@ -76,3 +76,16 @@
   position: unset;
   bottom: unset;
 }
+
+.edit_role .ant-form-item-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit_role .ant-col.ant-form-item-control {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  flex-grow: 0;
+}

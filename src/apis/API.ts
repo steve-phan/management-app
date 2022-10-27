@@ -70,7 +70,7 @@ export class EmployeeAPI {
   }
 
   static async editEmployee({ employeeSignUpInfo }: IFetchData) {
-    const response = await axios.post(`${baseURL}/account/edit-employee`, {
+    const response = await axios.post(`${baseURL}/edit-an-employee`, {
       employeeSignUpInfo,
     });
     return response.data;

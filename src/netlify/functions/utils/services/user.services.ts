@@ -8,7 +8,7 @@ import {
 import { connectMongoDB } from "../config/mogodb";
 import { shopinfoSchema } from "../models/shopinfo.model";
 
-import User, { employeeSchema } from "../models/user.model";
+import { employeeSchema } from "../models/user.model";
 
 export class UserServices {
   static async signIn({
@@ -84,7 +84,7 @@ export class UserServices {
   }) {
     const defaultDb = await connectMongoDB();
 
-    const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
+    const shopDb = defaultDb.connection.useDb("all-employees");
     const Employee = shopDb.model("Employee", employeeSchema);
     await Employee.deleteOne({ email });
     return await this.getAllEmployees({ Model: Employee });
@@ -95,18 +95,14 @@ export class UserServices {
   }: {
     employeeSignUpInfo: IEmployeeInfo;
   }) {
-    await User.findOneAndUpdate(
+    const defaultDb = await connectMongoDB();
+
+    const shopDb = defaultDb.connection.useDb("all-employees");
+    const Employee = shopDb.model("Employee", employeeSchema);
+    await Employee.findOneAndUpdate(
       { email: employeeSignUpInfo.email },
       employeeSignUpInfo
     );
-    const defaultDb = await connectMongoDB();
-
-    const shopDb = defaultDb.connection.useDb(
-      employeeSignUpInfo?.shopId || "shopDemoId"
-    );
-    const Employee = shopDb.model("Employee", employeeSchema);
-    await Employee.deleteOne({ email: employeeSignUpInfo.email });
-
     return await this.getAllEmployees({ Model: Employee });
   }
 
@@ -121,7 +117,7 @@ export class UserServices {
       const defaultDb = await connectMongoDB();
       const shopDb = defaultDb.connection.useDb("all-employees");
       const Employee = shopDb.model("Employee", employeeSchema);
-      return await Employee.find().select("-password");
+      return await Employee.find({ shopId }).select("-password");
     }
     const allEmployees = await Model.find().select("-password");
     return allEmployees;

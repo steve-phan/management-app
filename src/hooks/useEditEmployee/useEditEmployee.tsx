@@ -24,7 +24,7 @@ export const useEditEmployee = () => {
     }
   );
   useEffect(() => {
-    if (isSubmitEdit && !isLoading && data) {
+    if (isSubmitEdit && !isLoading && data?.users) {
       dispatch(setAllEmployees(data?.users));
       message
         .success(`edit ${employeeSignUpInfo.userName} successfully.`, 0.5)
