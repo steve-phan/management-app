@@ -1,4 +1,5 @@
 import { Handler } from "@netlify/functions";
+
 import { UserServices } from "../utils/services/user.services";
 
 export const handler: Handler = async (event, context) => {

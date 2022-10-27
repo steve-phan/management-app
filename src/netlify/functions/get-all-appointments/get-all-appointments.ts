@@ -1,5 +1,5 @@
 import { Handler } from "@netlify/functions";
-import { connectMongoDB } from "../utils/config/mogodb";
+
 import { AppointmentServices } from "../utils/services/appointments.services";
 
 export const handler: Handler = async (event, context) => {

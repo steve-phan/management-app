@@ -5,7 +5,7 @@ import { UserServices } from "../utils/services/user.services";
 export const handler: Handler = async (event, context) => {
   try {
     const employeeInfo = JSON.parse(event.body!);
-    const users = await UserServices.editEmployee(employeeInfo);
+    const users = await UserServices.deleteEmployee(employeeInfo);
     return {
       statusCode: 200,
       body: JSON.stringify({

@@ -63,7 +63,7 @@ export class EmployeeAPI {
   }
 
   static async deleteEmployee({ email }: { email: string }) {
-    const response = await axios.post(`${baseURL}/account/delete-employee`, {
+    const response = await axios.post(`${baseURL}/delete-an-employee`, {
       email,
     });
     return response.data;
