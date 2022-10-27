@@ -2,11 +2,13 @@ import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 
 import employeeReducer from "./user/user.reducer";
 import dashboardReducer from "./dashboard/dashboard.reducer";
+import calendarReducer from "./calendar/calendar.reducer";
 
 const store = configureStore({
   reducer: {
     employee: employeeReducer,
     dashboard: dashboardReducer,
+    calendar: calendarReducer,
   },
 });
 

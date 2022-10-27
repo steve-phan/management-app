@@ -1,37 +1,10 @@
-import type { BadgeProps } from "antd";
+import { BadgeProps, Empty, Spin } from "antd";
 import { Badge, Calendar } from "antd";
+import axios from "axios";
 import type { Moment } from "moment";
-
-const getListData = (value: Moment) => {
-  let listData;
-  switch (value.date()) {
-    case 8:
-      listData = [
-        { type: "warning", content: "This is warning event." },
-        { type: "success", content: "This is usual event." },
-      ];
-      break;
-    case 10:
-      listData = [
-        { type: "warning", content: "This is warning event." },
-        { type: "success", content: "This is usual event." },
-        { type: "error", content: "This is error event." },
-      ];
-      break;
-    case 15:
-      listData = [
-        { type: "warning", content: "This is warning event" },
-        { type: "success", content: "This is very long usual event。。...." },
-        { type: "error", content: "This is error event 1." },
-        { type: "error", content: "This is error event 2." },
-        { type: "error", content: "This is error event 3." },
-        { type: "error", content: "This is error event 4." },
-      ];
-      break;
-    default:
-  }
-  return listData || [];
-};
+import { useQuery } from "react-query";
+import { IAppointment } from "src/@types";
+import { appointmentMapping, getCurrentMonth } from "../shared/custom-dayjs";
 
 const getMonthData = (value: Moment) => {
   if (value.month() === 8) {
@@ -40,6 +13,17 @@ const getMonthData = (value: Moment) => {
 };
 
 export const EventsCalendar = (): JSX.Element => {
+  const { data, isLoading } = useQuery(["checkAuth"], async () => {
+    return await axios.get("/.netlify/functions/get-all-appointments", {
+      headers: {
+        shopId: "gao-vegan0410940",
+        appointmentOfMonth: getCurrentMonth(),
+      },
+    });
+  });
+
+  const dayObj = appointmentMapping(data?.data?.appointments);
+  // console.log({ dayObj });
   const monthCellRender = (value: Moment) => {
     const num = getMonthData(value);
     return num ? (
@@ -50,16 +34,48 @@ export const EventsCalendar = (): JSX.Element => {
     ) : null;
   };
 
+  if (isLoading) {
+    return <Spin />;
+  }
+
   const dateCellRender = (value: Moment) => {
-    const listData = getListData(value);
+    const date = value.date();
+    const listAppointments = dayObj[date] as IAppointment[];
+    console.log({ listAppointments });
+
+    if (listAppointments.length > 3) {
+      return (
+        <>
+          <ul className="events">
+            {listAppointments.slice(0, 2).map((item) => (
+              <li key={item._id}>
+                {/* <Badge
+                status={item.type as BadgeProps["status"]}
+                text={item.content}
+              /> */}
+                {item.firstName + item.lastName}
+              </li>
+            ))}
+            <li className="viewmore" key={listAppointments[3]._id}>
+              <Badge
+                status="warning"
+                text={` View more ${listAppointments.length - 2}`}
+              />
+            </li>
+          </ul>
+        </>
+      );
+    }
+
     return (
       <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge
+        {listAppointments.map((item) => (
+          <li key={item._id}>
+            {/* <Badge
               status={item.type as BadgeProps["status"]}
               text={item.content}
-            />
+            /> */}
+            {item.firstName + item.lastName}
           </li>
         ))}
       </ul>
@@ -68,6 +84,7 @@ export const EventsCalendar = (): JSX.Element => {
 
   return (
     <Calendar
+      className="bookable24"
       dateCellRender={dateCellRender}
       monthCellRender={monthCellRender}
     />

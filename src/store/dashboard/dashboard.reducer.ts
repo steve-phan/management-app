@@ -7,6 +7,7 @@ export const DashboardPage = {
   EMPLOYEE_DETAILS: "EMPLOYEE_DETAILS",
   EVENTS_CALENDAR: "EVENTS_CALENDAR",
 } as const;
+
 export type TDashboardPage = keyof typeof DashboardPage;
 
 const dashboardSlice = createSlice({

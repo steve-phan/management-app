@@ -1,4 +1,5 @@
 .App {
+  height: 100%;
   text-align: center;
 }
 
@@ -88,4 +89,37 @@
   width: -moz-fit-content;
   width: fit-content;
   flex-grow: 0;
+}
+
+.bookable24 .ant-picker-calendar-date-value {
+  text-align: center;
+  font-size: 13px;
+  line-height: 1;
+}
+.bookable24 .ant-picker-content th {
+  padding-left: 12px !important;
+  padding-bottom: 0 !important;
+  text-align: center;
+}
+
+ul.events {
+  padding-left: 0;
+}
+
+ul.events li {
+  font-size: 13px;
+  background: #039be5;
+  color: white;
+  border-radius: 4px;
+  text-align: center;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+ul.events .viewmore {
+  /* font-weight: bold;
+  color: burlywood; */
+  background: #ffffff;
 }

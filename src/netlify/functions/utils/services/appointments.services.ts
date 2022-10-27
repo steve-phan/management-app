@@ -1,14 +1,5 @@
-import * as bcrypt from "bcryptjs";
-import { Model } from "mongoose";
-import {
-  IEmployeeInfo,
-  IEmployeeSignInInfo,
-  ROLE,
-} from "src/@types/Employee.types";
 import { connectMongoDB } from "../config/mogodb";
 import { appointmentSchema } from "../models/appointment.model";
-
-import User, { employeeSchema } from "../models/user.model";
 
 export class AppointmentServices {
   static async getAllAppointments({

@@ -3,52 +3,39 @@ import { useState } from "react";
 
 import { useAppSelector } from "src/store/hooks";
 
+import { DashboardPage } from "src/store/dashboard/dashboard.reducer";
 import { EmployeeAccount } from "../Account/EmployeeAccount";
 import { EmployeeAvatar } from "../Account/EmployeeAvatar/EmployeeAvatar";
+import { mappingDashBoardPages } from "./Dashboard.helpers";
+import {
+  headerLogoStyles,
+  headerStyles,
+  sliderStyles,
+} from "./Dashboard.styles";
 import { DashBoardModalGroup } from "./DashBoardModalGroup/DashBoardModalGroup";
 import { SideBar } from "./SideBar/SideBar";
-import {
-  sliderStyles,
-  headerStyles,
-  headerLogoStyles,
-} from "./Dashboard.styles";
-import { mappingDashBoardPages } from "./Dashboard.helpers";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { getCurrentMonth } from "../shared/custom-dayjs";
 
 const { Header, Footer, Sider, Content } = Layout;
 
 export const Dashboard = () => {
   const [collap, setCollop] = useState(false);
-  const { isEmployeeLogin, openEmployeePage, employeeId, dashboardPage } =
-    useAppSelector((state) => {
+  const { isEmployeeLogin, employeeId, dashboardPage } = useAppSelector(
+    (state) => {
       return {
         employeeId: state.employee.activeEmployee._id,
         isEmployeeLogin: state.employee.activeEmployee.isEmployeeLogin,
-        openEmployeePage: state.dashboard.employeeDetails.open,
         dashboardPage: state.dashboard.dashboardPage,
       };
-    });
+    }
+  );
 
-  const { data, isLoading } = useQuery(["checkAuth"], async () => {
-    return await axios.get("/.netlify/functions/get-all-appointments", {
-      headers: {
-        shopId: "gao-vegan0410940",
-        appointmentOfMonth: getCurrentMonth(),
-      },
-    });
-  });
+  const isEventCalendarPage = dashboardPage === DashboardPage.EVENTS_CALENDAR;
 
   if (!isEmployeeLogin) {
     return <EmployeeAccount />;
   }
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
+    <Layout>
       <DashBoardModalGroup />
       <Sider
         theme="dark"
@@ -68,24 +55,30 @@ export const Dashboard = () => {
         style={{
           maxWidth: collap ? `calc(100% - 30px)` : `calc(100% - 200px)`,
           marginLeft: "auto",
+          height: "100vh",
         }}
       >
-        <Header style={headerStyles}>
-          <Typography.Paragraph strong style={headerLogoStyles}>
-            Amazing gbmh
-          </Typography.Paragraph>
-          <EmployeeAvatar employeeId={employeeId} />
-        </Header>
+        {!isEventCalendarPage && (
+          <Header style={headerStyles}>
+            <Typography.Paragraph strong style={headerLogoStyles}>
+              Amazing gbmh
+            </Typography.Paragraph>
+            <EmployeeAvatar employeeId={employeeId} />
+          </Header>
+        )}
         <Content
           style={{
-            padding: 16,
+            padding: isEventCalendarPage ? "0 16px" : 16,
             background: "white",
+            position: "relative",
+            height: `calc(100vh - 64px)`,
           }}
         >
-          {/* {openEmployeePage ? <EmployeeDetails /> : <Employees />} */}
           {mappingDashBoardPages[dashboardPage]}
         </Content>
-        <Footer>©{new Date().getFullYear()} Amzing gmbh</Footer>
+        {!isEventCalendarPage && (
+          <Footer>©{new Date().getFullYear()} Amzing gmbh</Footer>
+        )}
       </Layout>
     </Layout>
   );
