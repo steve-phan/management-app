@@ -22,7 +22,7 @@ export const useGetAllEmployees = () => {
   console.log({ data });
 
   useEffect(() => {
-    if (data) {
+    if (data?.users) {
       dispatch(setAllEmployees(data?.users));
     }
   }, [data, dispatch]);

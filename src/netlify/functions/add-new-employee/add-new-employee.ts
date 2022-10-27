@@ -10,12 +10,22 @@ import { connectMongoDB } from "../utils/config/mogodb";
 import { UserServices } from "../utils/services/user.services";
 
 export const handler: Handler = async (event, context) => {
-  const employeeInfo = JSON.parse(event.body!);
-  const user = UserServices.signUp(employeeInfo);
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: `Hello, add-new-employee function`,
-    }),
-  };
+  try {
+    const employeeInfo = JSON.parse(event.body!);
+    const users = await UserServices.signUp(employeeInfo);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        message: `SUCCESS`,
+        users,
+      }),
+    };
+  } catch (error) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({
+        error,
+      }),
+    };
+  }
 };

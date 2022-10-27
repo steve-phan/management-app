@@ -22,7 +22,7 @@ export class UserServices {
     const Employee = shopDb.model("Employee", employeeSchema);
 
     const user = await Employee.findOne({
-      userName: employeeSignInInfo.userName,
+      userName: employeeSignInInfo.userName.toLowerCase(),
     });
     if (
       user &&
@@ -37,6 +37,7 @@ export class UserServices {
         shopInfo,
       };
     } else {
+      // eslint-disable-next-line no-throw-literal
       throw `UserName or Password is wrong, please try again!`;
     }
     // TODO: using jwt library to send token back to client
@@ -59,11 +60,14 @@ export class UserServices {
       ],
     });
     if (existUser) {
+      // eslint-disable-next-line no-throw-literal
       throw `UserName: ${employeeSignUpInfo.userName} or Email: ${employeeSignUpInfo.email} is already taken`;
     }
     const user = new Employee({
       ...employeeSignUpInfo,
       role: ROLE.EMPLOYEE,
+      email: employeeSignUpInfo.email.toLowerCase(),
+      userName: employeeSignUpInfo.userName.toLowerCase(),
       shopId: employeeSignUpInfo?.shopId || "shopDemoId",
     });
     user.password = bcrypt.hashSync(employeeSignUpInfo.password, 10);
