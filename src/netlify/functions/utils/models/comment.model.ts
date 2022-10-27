@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
-const detailsCommentSchema = {
+export const detailsCommentSchema = {
   authorId: String,
   author: String,
   commentAt: Date,
   content: String,
 };
 
-const commentSchema = new Schema({
+export const commentSchema = new Schema({
   employeeId: String,
   comments: [detailsCommentSchema],
 });

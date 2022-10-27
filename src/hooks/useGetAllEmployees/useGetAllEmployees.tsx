@@ -19,7 +19,6 @@ export const useGetAllEmployees = () => {
       return EmployeeAPI.getAllEmployees(shopId);
     }
   });
-  console.log({ data });
 
   useEffect(() => {
     if (data?.users) {

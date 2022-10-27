@@ -5,8 +5,11 @@ import { CommentServices } from "../services/comment.services";
 export class CommentControler {
   static async getAllComments(req: Request, res: Response, next: NextFunction) {
     try {
-      const { employeeId } = req.body;
-      const allComments = await CommentServices.getAllComments({ employeeId });
+      const { employeeId, shopId } = req.body;
+      const allComments = await CommentServices.getAllComments({
+        employeeId,
+        shopId,
+      });
       res
         .status(200)
         .json({ allComments: allComments || [], message: "SUCCESS" });

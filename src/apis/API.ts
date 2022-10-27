@@ -14,7 +14,7 @@ export interface IEmployeeInfo extends IEmployeeSignInInfo {
   address: string;
   role: TROLE;
   _id: string;
-  shopId?: string;
+  shopId: string;
 }
 export interface IFetchData {
   employeeSignUpInfo: IEmployeeInfo;
@@ -30,6 +30,7 @@ export interface IComment {
 export interface IAddCommentProps {
   employeeId: string;
   comment: IComment;
+  shopId: string;
 }
 
 const baseURL = `/.netlify/functions`;
@@ -85,17 +86,25 @@ export class EmployeeAPI {
   }
   //***COMMENTS SECTION***
 
-  static async addComment({ employeeId, comment }: IAddCommentProps) {
-    const response = await axios.post(`${baseURL}/comment/add-comment`, {
+  static async addComment({ employeeId, comment, shopId }: IAddCommentProps) {
+    const response = await axios.post(`${baseURL}/add-new-comment`, {
       employeeId,
       comment,
+      shopId,
     });
     return response.data;
   }
 
-  static async getAllComments({ employeeId }: { employeeId: string }) {
-    const response = await axios.post(`${baseURL}/comment/get-all-comments`, {
+  static async getAllComments({
+    employeeId,
+    shopId,
+  }: {
+    employeeId: string;
+    shopId: string;
+  }) {
+    const response = await axios.post(`${baseURL}/get-all-comments`, {
       employeeId,
+      shopId,
     });
     return response.data;
   }

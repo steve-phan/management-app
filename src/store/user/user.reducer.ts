@@ -12,6 +12,7 @@ const activeEmployeeDefault: Omit<IActiveEmployee, "password"> = {
   address: "",
   role: ROLE.EMPLOYEE,
   _id: "",
+  shopId: "",
 };
 
 export interface IActiveEmployee extends IEmployeeInfo {

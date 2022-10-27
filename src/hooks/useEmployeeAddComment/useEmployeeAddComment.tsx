@@ -18,6 +18,7 @@ export const useEmployeeAddComment = () => {
     () => {
       if (submitting && value) {
         return EmployeeAPI.addComment({
+          shopId: employeeInfo.shopId,
           employeeId: employeeInfo?._id,
           comment: {
             author: `${activeEmployee.firstName} ${activeEmployee.lastName}`,

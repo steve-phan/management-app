@@ -24,11 +24,12 @@ export const EmployeeDetails = () => {
     () =>
       EmployeeAPI.getAllComments({
         employeeId: employeeInfo._id,
+        shopId: employeeInfo.shopId,
       })
   );
-
+  console.log({ data });
   useEffect(() => {
-    if (data) {
+    if (!isLoading && data) {
       dispatch(setEmployeeComments(data.allComments?.comments));
     }
   }, [employeeInfo._id, isLoading]);

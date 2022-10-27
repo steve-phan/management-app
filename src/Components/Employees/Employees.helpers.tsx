@@ -11,6 +11,10 @@ import {
   toggleEditEmployeeModal,
   toggleEmployeeDetails,
 } from "src/store";
+import {
+  DashboardPage,
+  setDashBoardPage,
+} from "src/store/dashboard/dashboard.reducer";
 
 export const EmployeeColor = {
   [ROLE.EMPLOYEE]: "geekblue",
@@ -63,7 +67,7 @@ export const getColumnsEmployee = (
             className="view_button"
             onClick={() => {
               dispatch(setEmployeeInfoPage(userInfo));
-              dispatch(toggleEmployeeDetails(true));
+              dispatch(setDashBoardPage(DashboardPage.EMPLOYEE_DETAILS));
             }}
           >
             {userInfo.firstName + " " + userInfo.lastName}
