@@ -9,6 +9,7 @@ import { useGetAllAppointments } from "src/hooks";
 import { DataCell } from "./DataCell";
 import { HeaderCalendar } from "./HeaderCalendar";
 import { getCurrentMonth } from "../shared/custom-dayjs";
+import { AppointmentDetails } from "./AppointmentDetails/AppointmentDetails";
 
 const Calendar = generateCalendar<Dayjs>(dayjsGenerateConfig);
 
@@ -25,37 +26,43 @@ export const EventsCalendar = (): JSX.Element => {
     return <Spin />;
   }
   return (
-    <Calendar
-      onChange={handleChange}
-      className="bookable24"
-      dateFullCellRender={(value) => {
-        return (
-          <div className="ant-picker-cell-inner ant-picker-calendar-date">
-            <div
-              className="ant-picker-calendar-date-value"
-              onClick={() => {
-                console.log("ADD A NEW EVENT");
-              }}
-            >
-              {value.date()}
+    <>
+      <AppointmentDetails />
+      <Calendar
+        onChange={handleChange}
+        className="bookable24"
+        dateFullCellRender={(value) => {
+          return (
+            <div className="ant-picker-cell-inner ant-picker-calendar-date">
+              <div
+                className="ant-picker-calendar-date-value"
+                onClick={() => {
+                  console.log("ADD A NEW EVENT");
+                }}
+              >
+                {value.date()}
+              </div>
+              <div className="ant-picker-calendar-date-content">
+                <DataCell
+                  value={value}
+                  appointments={data?.data?.appointments}
+                />
+              </div>
             </div>
-            <div className="ant-picker-calendar-date-content">
-              <DataCell value={value} appointments={data?.data?.appointments} />
-            </div>
-          </div>
-        );
-      }}
-      headerRender={({ value, type, onChange, onTypeChange }) => (
-        <HeaderCalendar
-          value={value}
-          type={type}
-          onChange={onChange}
-          onTypeChange={onTypeChange}
-          isLoading={isLoading}
-          totalAppointments={data?.data?.appointments?.length}
-        />
-      )}
-      onSelect={handleChange}
-    />
+          );
+        }}
+        headerRender={({ value, type, onChange, onTypeChange }) => (
+          <HeaderCalendar
+            value={value}
+            type={type}
+            onChange={onChange}
+            onTypeChange={onTypeChange}
+            isLoading={isLoading}
+            totalAppointments={data?.data?.appointments?.length}
+          />
+        )}
+        onSelect={handleChange}
+      />
+    </>
   );
 };

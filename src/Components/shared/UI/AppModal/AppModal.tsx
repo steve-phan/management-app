@@ -22,7 +22,9 @@ export const AppModal = ({
 }: IAppModalProps) => {
   const dispatch = useAppDispatch();
 
-  const handleCancel = () => {
+  const handleCancel = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+
     dispatch(toggleModal(false));
   };
   const handleOk = () => {

@@ -24,18 +24,18 @@ const employeeSlice = createSlice({
   name: "calendar",
   initialState: {
     calendarModal: {
-      open: false,
+      APPOINTMENT_DETAILS: false,
       data: undefined,
     },
     allEmployees: [] as IEmployeeInfo[],
     activeEmployee: activeEmployeeDefault,
   },
   reducers: {
-    toggleCalendarModal(state, action) {
-      state.calendarModal.open = action.payload;
+    toggleAppointMentDetailsModal(state, action) {
+      state.calendarModal.APPOINTMENT_DETAILS = action.payload;
     },
 
-    setDataCalendarModal(state, action) {
+    setDataAppointMentDetailsModal(state, action) {
       state.calendarModal.data = action.payload;
     },
     setAllEmployees(state, action) {
@@ -44,7 +44,7 @@ const employeeSlice = createSlice({
   },
 });
 
-export const { toggleCalendarModal, setDataCalendarModal } =
+export const { toggleAppointMentDetailsModal, setDataAppointMentDetailsModal } =
   employeeSlice.actions;
 
 export default employeeSlice.reducer;
