@@ -1,18 +1,38 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { IAppointment } from "src/@types";
 
+export const monthsShort = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 /**
  * @params : month and year (WIP)
  * @returns : string syntax month-year to query data by mongodb
  */
-export const getCurrentMonth = (year?: string, month?: string) =>
-  `${year ? year : dayjs().year()}-${month ? month : dayjs().month() + 1}`;
+export const getCurrentMonth = (event?: Dayjs) => {
+  if (event) {
+    const newmMonth =
+      event.month() > 8 ? event.month() + 1 : `0${event.month() + 1}`;
+    return `${event.year()}-${newmMonth}`;
+  }
+  return `${dayjs().year()}-${dayjs().month() + 1}`;
+};
 
 export const getDate = (date: string) => dayjs(date).date();
 
 export const appointmentMapping = (appointments: IAppointment[]) => {
   let dayObj: any = {};
-  appointments.forEach((appointment) => {
+  appointments?.forEach((appointment) => {
     const date = getDate(appointment?.selectedDate);
     if (dayObj[String(date)]) {
       dayObj[String(date)] = [...dayObj[String(date)], appointment];
