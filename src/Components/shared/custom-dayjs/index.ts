@@ -28,7 +28,7 @@ export const getCurrentMonth = (event?: Dayjs) => {
   return `${dayjs().year()}-${dayjs().month() + 1}`;
 };
 
-export const getDate = (date: string) => dayjs(date).date();
+export const getDate = (date: string) => date.substring(0, 10);
 
 export const appointmentMapping = (appointments: IAppointment[]) => {
   let dayObj: any = {};

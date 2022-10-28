@@ -27,7 +27,7 @@ export const EmployeeDetails = () => {
         shopId: employeeInfo.shopId,
       })
   );
-  console.log({ data });
+
   useEffect(() => {
     if (!isLoading && data) {
       dispatch(setEmployeeComments(data.allComments?.comments));

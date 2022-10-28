@@ -101,15 +101,21 @@
   padding-bottom: 0 !important;
   text-align: center;
 }
+.bookable24
+  .ant-picker-cell-selected
+  .ant-picker-cell-inner.ant-picker-calendar-date {
+  border-radius: 8px;
+}
 
 ul.events {
   padding-left: 0;
+  z-index: 20;
 }
 
 ul.events li {
   font-size: 13px;
-  background: #039be5;
-  color: white;
+  background: #009689;
+  color: #fff;
   border-radius: 4px;
   text-align: center;
   margin-top: 2px;

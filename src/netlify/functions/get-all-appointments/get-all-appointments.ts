@@ -4,14 +4,14 @@ import { AppointmentServices } from "../utils/services/appointments.services";
 
 export const handler: Handler = async (event, context) => {
   try {
-    const { shopid, monthquery } = event.headers as unknown as {
+    const { shopid, rangequery } = event.headers as unknown as {
       shopid: string;
-      monthquery: string;
+      rangequery: string;
     };
 
     const allAppointments = await AppointmentServices.getAllAppointments({
       shopId: shopid,
-      monthQuery: monthquery,
+      rangeQuery: rangequery,
     });
 
     return {

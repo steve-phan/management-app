@@ -1,37 +1,50 @@
 import { useState } from "react";
 import { Spin } from "antd";
 import generateCalendar from "antd/es/calendar/generateCalendar";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import dayjsGenerateConfig from "rc-picker/lib/generate/dayjs";
 
 import { useGetAllAppointments } from "src/hooks";
 
-import { getCurrentMonth } from "../shared/custom-dayjs";
 import { DataCell } from "./DataCell";
 import { HeaderCalendar } from "./HeaderCalendar";
+import { getCurrentMonth } from "../shared/custom-dayjs";
 
 const Calendar = generateCalendar<Dayjs>(dayjsGenerateConfig);
 
 export const EventsCalendar = (): JSX.Element => {
-  const [monthQuery, setMonthQuery] = useState(getCurrentMonth());
+  const [rangeQuery, setRangeQuery] = useState(dayjs().format());
 
-  const { data, isLoading } = useGetAllAppointments(monthQuery);
+  const { data, isLoading } = useGetAllAppointments(rangeQuery);
 
   const handleChange = (event: Dayjs) => {
-    setMonthQuery(getCurrentMonth(event));
+    setRangeQuery(event.format());
   };
 
-  if (isLoading && monthQuery === getCurrentMonth() && !data) {
+  if (isLoading && rangeQuery === getCurrentMonth() && !data) {
     return <Spin />;
   }
-
   return (
     <Calendar
       onChange={handleChange}
       className="bookable24"
-      dateCellRender={(value) => (
-        <DataCell value={value} appointments={data?.data?.appointments} />
-      )}
+      dateFullCellRender={(value) => {
+        return (
+          <div className="ant-picker-cell-inner ant-picker-calendar-date">
+            <div
+              className="ant-picker-calendar-date-value"
+              onClick={() => {
+                console.log("ADD A NEW EVENT");
+              }}
+            >
+              {value.date()}
+            </div>
+            <div className="ant-picker-calendar-date-content">
+              <DataCell value={value} appointments={data?.data?.appointments} />
+            </div>
+          </div>
+        );
+      }}
       headerRender={({ value, type, onChange, onTypeChange }) => (
         <HeaderCalendar
           value={value}
@@ -42,6 +55,7 @@ export const EventsCalendar = (): JSX.Element => {
           totalAppointments={data?.data?.appointments?.length}
         />
       )}
+      onSelect={handleChange}
     />
   );
 };
