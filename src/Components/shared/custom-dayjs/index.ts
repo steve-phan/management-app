@@ -1,20 +1,8 @@
 import dayjs, { Dayjs } from "dayjs";
+
 import { IAppointment } from "src/@types";
 
-export const monthsShort = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+export { monthsShort, allSlots } from "./date.constants";
 /**
  * @params : month and year (WIP)
  * @returns : string syntax month-year to query data by mongodb
