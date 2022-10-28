@@ -10,6 +10,7 @@ import { DataCell } from "./DataCell";
 import { HeaderCalendar } from "./HeaderCalendar";
 import { getCurrentMonth } from "../shared/custom-dayjs";
 import { AppointmentDetails } from "./AppointmentDetails/AppointmentDetails";
+import { useAppSelector } from "src/store/hooks";
 
 const Calendar = generateCalendar<Dayjs>(dayjsGenerateConfig);
 
@@ -17,6 +18,10 @@ export const EventsCalendar = (): JSX.Element => {
   const [rangeQuery, setRangeQuery] = useState(dayjs().format());
 
   const { data, isLoading } = useGetAllAppointments(rangeQuery);
+  const { appointmentDetailsModal } = useAppSelector((state) => ({
+    appointmentDetailsModal:
+      state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
+  }));
 
   const handleChange = (event: Dayjs) => {
     setRangeQuery(event.format());
@@ -27,7 +32,7 @@ export const EventsCalendar = (): JSX.Element => {
   }
   return (
     <>
-      <AppointmentDetails />
+      {appointmentDetailsModal && <AppointmentDetails />}
       <Calendar
         onChange={handleChange}
         className="bookable24"

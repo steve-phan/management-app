@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import {
   BellOutlined,
   TeamOutlined,
@@ -7,20 +7,22 @@ import {
   MailOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 import { IAppointment } from "src/@types";
 import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
 import { toggleAppointMentDetailsModal } from "src/store/calendar/calendar.reducer";
 import { useAppSelector } from "src/store/hooks";
 import { allSlots } from "src/Components/shared/custom-dayjs";
-import dayjs from "dayjs";
 
 export const AppointmentDetails = () => {
   const { open, appointment } = useAppSelector((state) => ({
-    open: state.calendar.calendarModal.APPOINTMENT_DETAILS,
-    appointment: state.calendar.calendarModal.data as IAppointment | undefined,
+    open: state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
+    appointment: state.calendar.calendarModal.APPOINTMENT_DETAILS.data as
+      | IAppointment
+      | undefined,
   }));
-  console.log({ appointment });
+
   const {
     firstName,
     lastName,
