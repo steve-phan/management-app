@@ -1,4 +1,4 @@
-import { DashBoardModal } from "src/Components/shared/UI/DashBoardModal/DashBoardModal";
+import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
 import { useDeleteEmployee } from "src/hooks";
 import { toggleDeleteEmployeeModal } from "src/store";
 
@@ -6,7 +6,7 @@ export const DeleteEmployee = ({ open }: { open: boolean }) => {
   const { handleDeleteEmployee, employeeFullname } = useDeleteEmployee();
 
   return (
-    <DashBoardModal
+    <AppModal
       open={open}
       toggleModal={toggleDeleteEmployeeModal}
       title="Are you sure want to delete this EMPLOYEE?"
@@ -14,6 +14,6 @@ export const DeleteEmployee = ({ open }: { open: boolean }) => {
       onOk={handleDeleteEmployee}
     >
       <>Employee: {employeeFullname}</>
-    </DashBoardModal>
+    </AppModal>
   );
 };

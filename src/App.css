@@ -47,6 +47,9 @@
     transform: rotate(360deg);
   }
 }
+.dashboard-modal .ant-modal {
+  padding-bottom: 0;
+}
 .dashboard-modal .ant-modal-body {
   padding-bottom: 0;
 }
@@ -117,7 +120,8 @@ ul.events li {
   background: #009689;
   color: #fff;
   border-radius: 4px;
-  text-align: center;
+  text-align: left;
+  padding: 0px 6px;
   margin-top: 2px;
   margin-bottom: 2px;
   white-space: nowrap;
@@ -128,4 +132,6 @@ ul.events .viewmore {
   /* font-weight: bold;
   color: burlywood; */
   background: #ffffff;
+  color: #3c4043;
+  font-weight: bold;
 }

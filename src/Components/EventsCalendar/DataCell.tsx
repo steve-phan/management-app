@@ -1,4 +1,3 @@
-import { Badge } from "antd";
 import { Dayjs } from "dayjs";
 
 import { IAppointment } from "src/@types";
@@ -41,10 +40,7 @@ export const DataCell = ({
                 console.log("VIEW More EVENT");
               }}
             >
-              <Badge
-                status="warning"
-                text={` View ${listAppointments.length - 2} more`}
-              />
+              {listAppointments.length - 2} more
             </li>
           </>
         ) : (

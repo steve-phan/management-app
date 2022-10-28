@@ -3,7 +3,7 @@ import { Modal } from "antd";
 
 import { useAppDispatch } from "src/store/hooks";
 
-export interface IDashBoardModalProps {
+export interface IAppModalProps {
   title: string;
   open: boolean;
   toggleModal: ActionCreatorWithPayload<any, string>;
@@ -12,14 +12,14 @@ export interface IDashBoardModalProps {
   onOk?: () => void;
 }
 
-export const DashBoardModal = ({
+export const AppModal = ({
   open,
   title,
   toggleModal,
   children,
   showModalFooter = false,
   onOk = () => {},
-}: IDashBoardModalProps) => {
+}: IAppModalProps) => {
   const dispatch = useAppDispatch();
 
   const handleCancel = () => {

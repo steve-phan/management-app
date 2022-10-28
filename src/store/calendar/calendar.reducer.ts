@@ -23,13 +23,20 @@ export interface IActiveEmployee extends IEmployeeInfo {
 const employeeSlice = createSlice({
   name: "calendar",
   initialState: {
-    calendarModal: false,
+    calendarModal: {
+      open: false,
+      data: undefined,
+    },
     allEmployees: [] as IEmployeeInfo[],
     activeEmployee: activeEmployeeDefault,
   },
   reducers: {
     toggleCalendarModal(state, action) {
-      state.calendarModal = action.payload;
+      state.calendarModal.open = action.payload;
+    },
+
+    setDataCalendarModal(state, action) {
+      state.calendarModal.data = action.payload;
     },
     setAllEmployees(state, action) {
       state.allEmployees = action.payload;
@@ -37,6 +44,7 @@ const employeeSlice = createSlice({
   },
 });
 
-export const { toggleCalendarModal } = employeeSlice.actions;
+export const { toggleCalendarModal, setDataCalendarModal } =
+  employeeSlice.actions;
 
 export default employeeSlice.reducer;
