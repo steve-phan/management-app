@@ -2,8 +2,10 @@ import { Dayjs } from "dayjs";
 
 import { IAppointment } from "src/@types";
 import {
-  setDataAppointMentDetailsModal,
   toggleAppointMentDetailsModal,
+  toggleViewMoreAppointmentModal,
+  setDataAppointMentDetailsModal,
+  setDataViewMoreAppointMentsModal,
 } from "src/store/calendar/calendar.reducer";
 import { useAppDispatch } from "src/store/hooks";
 
@@ -17,12 +19,24 @@ export const DataCell = ({
   appointments: IAppointment[];
 }) => {
   const dispatch = useAppDispatch();
+
   const dayObj = appointmentMapping(appointments);
   const date = getDate(value.format());
   const listAppointments = dayObj[date] as IAppointment[];
+
   if (!listAppointments) {
     return <></>;
   }
+
+  const handleViewAppointmentDetails = (item: IAppointment) => {
+    dispatch(setDataAppointMentDetailsModal(item));
+    dispatch(toggleAppointMentDetailsModal(true));
+  };
+
+  const handleViewMoreAppointments = () => {
+    dispatch(setDataViewMoreAppointMentsModal(listAppointments));
+    dispatch(toggleViewMoreAppointmentModal(true));
+  };
 
   return (
     <>
@@ -32,9 +46,8 @@ export const DataCell = ({
             {listAppointments.slice(0, 2).map((item) => (
               <li
                 key={item._id}
-                onClick={(e) => {
-                  dispatch(setDataAppointMentDetailsModal(item));
-                  dispatch(toggleAppointMentDetailsModal(true));
+                onClick={() => {
+                  handleViewAppointmentDetails(item);
                 }}
               >
                 {`${item.firstName} ${item.lastName}`}
@@ -43,9 +56,7 @@ export const DataCell = ({
             <li
               className="viewmore"
               key={listAppointments[3]._id}
-              onClick={() => {
-                console.log("VIEW More EVENT");
-              }}
+              onClick={handleViewMoreAppointments}
             >
               {listAppointments.length - 2} more
             </li>
@@ -56,7 +67,7 @@ export const DataCell = ({
               <li
                 key={item._id}
                 onClick={() => {
-                  console.log("VIEW AN EVENT");
+                  handleViewAppointmentDetails(item);
                 }}
               >
                 {`${item.firstName} ${item.lastName}`}

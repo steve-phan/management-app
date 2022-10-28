@@ -47,13 +47,20 @@ const employeeSlice = createSlice({
     setDataAppointMentDetailsModal(state, action) {
       state.calendarModal.APPOINTMENT_DETAILS.data = action.payload;
     },
+    setDataViewMoreAppointMentsModal(state, action) {
+      state.calendarModal.VIEW_MORE_APPOINTMENTS.data = action.payload;
+    },
     setAllEmployees(state, action) {
       state.allEmployees = action.payload;
     },
   },
 });
 
-export const { toggleAppointMentDetailsModal, setDataAppointMentDetailsModal } =
-  employeeSlice.actions;
+export const {
+  toggleAppointMentDetailsModal,
+  toggleViewMoreAppointmentModal,
+  setDataAppointMentDetailsModal,
+  setDataViewMoreAppointMentsModal,
+} = employeeSlice.actions;
 
 export default employeeSlice.reducer;

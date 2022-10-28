@@ -109,6 +109,11 @@
   .ant-picker-cell-inner.ant-picker-calendar-date {
   border-radius: 8px;
 }
+.bookable24
+  .ant-picker-cell-selected
+  .ant-picker-cell-inner.ant-picker-calendar-date::before {
+  z-index: -1;
+}
 
 ul.events {
   padding-left: 0;
