@@ -10,6 +10,7 @@ export interface IAppModalProps {
   children: JSX.Element;
   showModalFooter?: boolean;
   onOk?: () => void;
+  width?: number;
 }
 
 export const AppModal = ({
@@ -19,6 +20,7 @@ export const AppModal = ({
   children,
   showModalFooter = false,
   onOk = () => {},
+  width = 520,
 }: IAppModalProps) => {
   const dispatch = useAppDispatch();
 
@@ -33,6 +35,7 @@ export const AppModal = ({
 
   return (
     <Modal
+      width={width}
       title={title}
       open={open}
       onCancel={handleCancel}
