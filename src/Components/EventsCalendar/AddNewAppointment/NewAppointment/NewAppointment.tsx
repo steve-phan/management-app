@@ -1,20 +1,49 @@
-import { Button, DatePicker, Form, Input, InputNumber, Select } from "antd";
+import { Button, Form, Input, InputNumber, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import axios from "axios";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 
 import { allSlots } from "src/Components/shared/custom-dayjs";
-import { useAppSelector } from "src/store/hooks";
+import { setAppointmentsList, toggleAddNewAppointmentModal } from "src/store";
+import { useAppDispatch, useAppSelector } from "src/store/hooks";
 
 export const NewAppointment = () => {
-  //   const { error, isLoading, onSubmitActiveEmployee } = useSignUpEmployee({
-  //     type,
-  //   });
-  const { role } = useAppSelector((state) => state.employee.activeEmployee);
+  const [appointment, setAppointment] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const dispatch = useAppDispatch();
+  const { selectedDate } = useAppSelector((state) => ({
+    selectedDate: state.calendar.calendarModal.ADD_NEW_APPOINTMENT.date,
+  }));
+  const { isLoading, error, data } = useQuery(
+    ["appointment/add-new-appointment", appointment],
+    async () => {
+      return await axios.post("/.netlify/functions/add-new-appointment", {
+        ...appointment,
+        selectedDate,
+        shopId: "gao-vegan0410940",
+      });
+    },
+    {
+      retry: 1,
+    }
+  );
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    // onSubmitActiveEmployee(values);
+    setSubmitted(true);
+    setAppointment(values);
     console.log({ values });
   };
+
+  useEffect(() => {
+    if (submitted && !isLoading && data?.data?.message === "SUCCESS") {
+      setSubmitted(false);
+      dispatch(setAppointmentsList(data?.data?.allAppointments));
+      dispatch(toggleAddNewAppointmentModal(false));
+    }
+  }, [data, isLoading]);
 
   return (
     <Form
@@ -42,28 +71,27 @@ export const NewAppointment = () => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="persons"
+        name="person"
         label="Persons"
         rules={[{ required: true, message: "This field is required" }]}
       >
         <InputNumber />
       </Form.Item>
       <Form.Item
-        name="date"
         label="Date"
         rules={[{ required: true, message: "This field is required" }]}
       >
-        <DatePicker />
+        {String(dayjs(selectedDate).format("dddd, MMM, DD"))}
       </Form.Item>
 
       <Form.Item
-        name="time"
+        name="selectedSlot"
         label="Time"
         rules={[{ required: true, message: "This field is required" }]}
       >
         <Select>
           {allSlots.map((slot, index) => (
-            <Select.Option key={slot} value={slot}>
+            <Select.Option key={slot} value={index}>
               {slot}
             </Select.Option>
           ))}
@@ -97,7 +125,7 @@ export const NewAppointment = () => {
       </Form.Item>
       <Form.Item>
         <Button
-          //   loading={isLoading}
+          loading={isLoading}
           type="primary"
           htmlType="submit"
           style={{ width: "100%" }}

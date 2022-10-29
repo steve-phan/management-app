@@ -34,8 +34,10 @@ const employeeSlice = createSlice({
       ADD_NEW_APPOINTMENT: {
         open: false,
         data: undefined,
+        date: undefined,
       },
     },
+    appointmentsList: [],
     allEmployees: [] as IEmployeeInfo[],
     activeEmployee: activeEmployeeDefault,
   },
@@ -47,7 +49,8 @@ const employeeSlice = createSlice({
       state.calendarModal.VIEW_MORE_APPOINTMENTS.open = action.payload;
     },
     toggleAddNewAppointmentModal(state, action) {
-      state.calendarModal.ADD_NEW_APPOINTMENT.open = action.payload;
+      state.calendarModal.ADD_NEW_APPOINTMENT.open = action.payload.open;
+      state.calendarModal.ADD_NEW_APPOINTMENT.date = action.payload.date;
     },
 
     setDataAppointMentDetailsModal(state, action) {
@@ -58,6 +61,9 @@ const employeeSlice = createSlice({
     },
     setDataAddNewAppointMentModal(state, action) {
       state.calendarModal.ADD_NEW_APPOINTMENT.data = action.payload;
+    },
+    setAppointmentsList(state, action) {
+      state.appointmentsList = action.payload;
     },
     setAllEmployees(state, action) {
       state.allEmployees = action.payload;
@@ -72,6 +78,7 @@ export const {
   setDataAppointMentDetailsModal,
   setDataViewMoreAppointMentsModal,
   setDataAddNewAppointMentModal,
+  setAppointmentsList,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

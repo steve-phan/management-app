@@ -4,6 +4,38 @@ import { connectMongoDB } from "../config/mogodb";
 import { appointmentSchema } from "../models/appointment.model";
 
 export class AppointmentServices {
+  static async addNewAppointment({ appointment }: { appointment: any }) {
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      selectedDate,
+      selectedSlot,
+      person,
+      require,
+      shopId,
+    } = appointment;
+    const defaultDb = await connectMongoDB();
+    const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
+    const Appointment = shopDb.model("Appointment", appointmentSchema);
+
+    const newAppointment = new Appointment({
+      firstName,
+      lastName,
+      email,
+      phone,
+      selectedDate,
+      selectedSlot,
+      person,
+      require,
+    });
+
+    await newAppointment.save();
+
+    return await this.getAllAppointments({ shopId, rangeQuery: selectedDate });
+  }
+
   static async getAllAppointments({
     shopId,
     rangeQuery,

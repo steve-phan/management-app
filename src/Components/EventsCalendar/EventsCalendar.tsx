@@ -25,7 +25,9 @@ export const EventsCalendar = (): JSX.Element => {
     appointmentDetailsModal,
     viewMoreAppointmentsModal,
     addNewAppointment,
+    appointmentsList,
   } = useAppSelector((state) => ({
+    appointmentsList: state.calendar.appointmentsList,
     appointmentDetailsModal:
       state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
     viewMoreAppointmentsModal:
@@ -53,17 +55,19 @@ export const EventsCalendar = (): JSX.Element => {
             <div
               className="ant-picker-cell-inner ant-picker-calendar-date"
               onClick={() => {
-                dispatch(toggleAddNewAppointmentModal(true));
+                dispatch(
+                  toggleAddNewAppointmentModal({
+                    open: true,
+                    date: value.format(),
+                  })
+                );
               }}
             >
               <div className="ant-picker-calendar-date-value">
                 {value.date()}
               </div>
               <div className="ant-picker-calendar-date-content">
-                <DataCell
-                  value={value}
-                  appointments={data?.data?.appointments}
-                />
+                <DataCell value={value} appointments={appointmentsList} />
               </div>
             </div>
           );
@@ -75,7 +79,7 @@ export const EventsCalendar = (): JSX.Element => {
             onChange={onChange}
             onTypeChange={onTypeChange}
             isLoading={isLoading}
-            totalAppointments={data?.data?.appointments?.length}
+            totalAppointments={appointmentsList?.length}
           />
         )}
         onSelect={handleChange}

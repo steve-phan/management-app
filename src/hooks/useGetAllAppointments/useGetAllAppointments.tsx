@@ -1,7 +1,11 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { setAppointmentsList } from "src/store";
+import { useAppDispatch } from "src/store/hooks";
 
 export const useGetAllAppointments = (rangeQuery: string) => {
+  const dispatch = useAppDispatch();
   const { data, isLoading } = useQuery(
     [
       "checkAuth",
@@ -17,6 +21,12 @@ export const useGetAllAppointments = (rangeQuery: string) => {
       });
     }
   );
+
+  useEffect(() => {
+    if (!isLoading && data?.data?.allAppointments) {
+      dispatch(setAppointmentsList(data?.data?.allAppointments));
+    }
+  }, [isLoading, data]);
 
   return {
     isLoading,
