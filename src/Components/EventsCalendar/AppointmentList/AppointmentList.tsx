@@ -28,7 +28,10 @@ export const AppointmentList = ({
     dispatch(toggleAppointMentDetailsModal(true));
   };
 
-  const handleViewMoreAppointments = () => {
+  const handleViewMoreAppointments = (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
     dispatch(setDataViewMoreAppointMentsModal(sortedAppointments));
     dispatch(toggleViewMoreAppointmentModal(true));
   };
@@ -40,7 +43,8 @@ export const AppointmentList = ({
             {sortedAppointments.slice(0, 2).map((item) => (
               <li
                 key={item._id}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   handleViewAppointmentDetails(item);
                 }}
               >

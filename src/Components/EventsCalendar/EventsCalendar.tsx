@@ -44,13 +44,13 @@ export const EventsCalendar = (): JSX.Element => {
         className="bookable24"
         dateFullCellRender={(value) => {
           return (
-            <div className="ant-picker-cell-inner ant-picker-calendar-date">
-              <div
-                className="ant-picker-calendar-date-value"
-                onClick={() => {
-                  console.log("ADD A NEW EVENT");
-                }}
-              >
+            <div
+              className="ant-picker-cell-inner ant-picker-calendar-date"
+              onClick={() => {
+                console.log("ADD A NEW EVENT");
+              }}
+            >
+              <div className="ant-picker-calendar-date-value">
                 {value.date()}
               </div>
               <div className="ant-picker-calendar-date-content">
