@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 import { IAppointment } from "src/@types";
 import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
-import { toggleAppointMentDetailsModal } from "src/store/calendar/calendar.reducer";
+import { toggleAppointMentDetailsModal } from "src/store";
 import { useAppSelector } from "src/store/hooks";
 import { allSlots } from "src/Components/shared/custom-dayjs";
 

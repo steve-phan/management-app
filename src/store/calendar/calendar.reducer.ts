@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { STATES } from "mongoose";
 
 import { ROLE } from "src/@types/Employee.types";
 import { IEmployeeInfo } from "src/apis/API";
@@ -32,6 +31,10 @@ const employeeSlice = createSlice({
         open: false,
         data: undefined,
       },
+      ADD_NEW_APPOINTMENT: {
+        open: false,
+        data: undefined,
+      },
     },
     allEmployees: [] as IEmployeeInfo[],
     activeEmployee: activeEmployeeDefault,
@@ -43,12 +46,18 @@ const employeeSlice = createSlice({
     toggleViewMoreAppointmentModal(state, action) {
       state.calendarModal.VIEW_MORE_APPOINTMENTS.open = action.payload;
     },
+    toggleAddNewAppointmentModal(state, action) {
+      state.calendarModal.ADD_NEW_APPOINTMENT.open = action.payload;
+    },
 
     setDataAppointMentDetailsModal(state, action) {
       state.calendarModal.APPOINTMENT_DETAILS.data = action.payload;
     },
     setDataViewMoreAppointMentsModal(state, action) {
       state.calendarModal.VIEW_MORE_APPOINTMENTS.data = action.payload;
+    },
+    setDataAddNewAppointMentModal(state, action) {
+      state.calendarModal.ADD_NEW_APPOINTMENT.data = action.payload;
     },
     setAllEmployees(state, action) {
       state.allEmployees = action.payload;
@@ -59,8 +68,10 @@ const employeeSlice = createSlice({
 export const {
   toggleAppointMentDetailsModal,
   toggleViewMoreAppointmentModal,
+  toggleAddNewAppointmentModal,
   setDataAppointMentDetailsModal,
   setDataViewMoreAppointMentsModal,
+  setDataAddNewAppointMentModal,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

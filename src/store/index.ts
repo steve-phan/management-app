@@ -16,4 +16,13 @@ export {
   setSingOutActiveEmployee,
 } from "./user/user.reducer";
 
+export {
+  toggleAppointMentDetailsModal,
+  toggleViewMoreAppointmentModal,
+  toggleAddNewAppointmentModal,
+  setDataAppointMentDetailsModal,
+  setDataViewMoreAppointMentsModal,
+  setDataAddNewAppointMentModal,
+} from "./calendar/calendar.reducer";
+
 export default store;

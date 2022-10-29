@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import React from "react";
 import { IAppointment } from "src/@types";
 import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
-import { toggleViewMoreAppointmentModal } from "src/store/calendar/calendar.reducer";
+import { toggleViewMoreAppointmentModal } from "src/store";
 import { useAppSelector } from "src/store/hooks";
 import { AppointmentList } from "../AppointmentList/AppointmentList";
 

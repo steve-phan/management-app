@@ -10,23 +10,28 @@ import { DataCell } from "./DataCell";
 import { HeaderCalendar } from "./HeaderCalendar";
 import { getCurrentMonth } from "../shared/custom-dayjs";
 import { AppointmentDetails } from "./AppointmentDetails/AppointmentDetails";
-import { useAppSelector } from "src/store/hooks";
+import { useAppDispatch, useAppSelector } from "src/store/hooks";
 import { ViewMoreAppointments } from "./ViewMoreAppointments/ViewMoreAppointments";
+import { toggleAddNewAppointmentModal } from "src/store";
+import { AddNewAppointment } from "./AddNewAppointment/AddNewAppointment";
 
 const Calendar = generateCalendar<Dayjs>(dayjsGenerateConfig);
 
 export const EventsCalendar = (): JSX.Element => {
   const [rangeQuery, setRangeQuery] = useState(dayjs().format());
-
+  const dispatch = useAppDispatch();
   const { data, isLoading } = useGetAllAppointments(rangeQuery);
-  const { appointmentDetailsModal, viewMoreAppointmentsModal } = useAppSelector(
-    (state) => ({
-      appointmentDetailsModal:
-        state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
-      viewMoreAppointmentsModal:
-        state.calendar.calendarModal.VIEW_MORE_APPOINTMENTS.open,
-    })
-  );
+  const {
+    appointmentDetailsModal,
+    viewMoreAppointmentsModal,
+    addNewAppointment,
+  } = useAppSelector((state) => ({
+    appointmentDetailsModal:
+      state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
+    viewMoreAppointmentsModal:
+      state.calendar.calendarModal.VIEW_MORE_APPOINTMENTS.open,
+    addNewAppointment: state.calendar.calendarModal.ADD_NEW_APPOINTMENT.open,
+  }));
 
   const handleChange = (event: Dayjs) => {
     setRangeQuery(event.format());
@@ -39,6 +44,7 @@ export const EventsCalendar = (): JSX.Element => {
     <>
       {appointmentDetailsModal && <AppointmentDetails />}
       {viewMoreAppointmentsModal && <ViewMoreAppointments />}
+      {addNewAppointment && <AddNewAppointment />}
       <Calendar
         onChange={handleChange}
         className="bookable24"
@@ -47,7 +53,7 @@ export const EventsCalendar = (): JSX.Element => {
             <div
               className="ant-picker-cell-inner ant-picker-calendar-date"
               onClick={() => {
-                console.log("ADD A NEW EVENT");
+                dispatch(toggleAddNewAppointmentModal(true));
               }}
             >
               <div className="ant-picker-calendar-date-value">

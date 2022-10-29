@@ -1,13 +1,11 @@
-import dayjs, { Dayjs } from "dayjs";
-
 import { IAppointment } from "src/@types";
 import { allSlots } from "src/Components/shared/custom-dayjs";
 import {
-  toggleAppointMentDetailsModal,
-  toggleViewMoreAppointmentModal,
   setDataAppointMentDetailsModal,
   setDataViewMoreAppointMentsModal,
-} from "src/store/calendar/calendar.reducer";
+  toggleAppointMentDetailsModal,
+  toggleViewMoreAppointmentModal,
+} from "src/store";
 import { useAppDispatch } from "src/store/hooks";
 
 export const AppointmentList = ({
@@ -71,7 +69,8 @@ export const AppointmentList = ({
             {sortedAppointments.map((item) => (
               <li
                 key={item._id}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   handleViewAppointmentDetails(item);
                 }}
               >

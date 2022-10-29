@@ -1,13 +1,6 @@
 import { Dayjs } from "dayjs";
 
 import { IAppointment } from "src/@types";
-import {
-  toggleAppointMentDetailsModal,
-  toggleViewMoreAppointmentModal,
-  setDataAppointMentDetailsModal,
-  setDataViewMoreAppointMentsModal,
-} from "src/store/calendar/calendar.reducer";
-import { useAppDispatch } from "src/store/hooks";
 
 import { appointmentMapping, getDate } from "../shared/custom-dayjs";
 import { AppointmentList } from "./AppointmentList/AppointmentList";
