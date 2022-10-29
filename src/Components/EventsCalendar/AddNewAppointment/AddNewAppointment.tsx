@@ -2,8 +2,9 @@ import React from "react";
 
 import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
 import { toggleAddNewAppointmentModal } from "src/store";
-
 import { useAppSelector } from "src/store/hooks";
+
+import { NewAppointment } from "./NewAppointment/NewAppointment";
 
 export const AddNewAppointment = () => {
   const { open } = useAppSelector((state) => ({
@@ -15,7 +16,7 @@ export const AddNewAppointment = () => {
       open={open}
       toggleModal={toggleAddNewAppointmentModal}
     >
-      <h1>Hello Add new Appointment component</h1>
+      <NewAppointment />
     </AppModal>
   );
 };
