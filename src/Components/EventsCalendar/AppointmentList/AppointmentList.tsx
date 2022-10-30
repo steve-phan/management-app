@@ -1,24 +1,15 @@
-import dayjs, { Dayjs } from "dayjs";
 import { IAppointment } from "src/@types";
 import { allSlots } from "src/Components/shared/data-transform";
 import {
   setDataAppointMentDetailsModal,
-  setDataViewMoreAppointMentsModal,
   toggleAppointMentDetailsModal,
-  toggleViewMoreAppointmentModal,
 } from "src/store";
 import { useAppDispatch } from "src/store/hooks";
 
 export const AppointmentList = ({
   listAppointments,
-  isCollapse,
-  rangeQuery,
-  value,
 }: {
   listAppointments: IAppointment[];
-  rangeQuery?: string;
-  isCollapse?: boolean;
-  value?: Dayjs;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -27,94 +18,33 @@ export const AppointmentList = ({
     dispatch(toggleAppointMentDetailsModal(true));
   };
 
-  const handleViewMoreAppointments = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>
-  ) => {
-    e.stopPropagation();
-    dispatch(setDataViewMoreAppointMentsModal(listAppointments));
-    dispatch(toggleViewMoreAppointmentModal(true));
-  };
-  const dateToShowDetailsArray = [
-    dayjs().format("DD/MM/YYYY"),
-    dayjs().add(1, "day").format("DD/MM/YYYY"),
-    dayjs().add(2, "day").format("DD/MM/YYYY"),
-  ];
-
-  if (value && !dateToShowDetailsArray.includes(value?.format("DD/MM/YYYY"))) {
-    return (
-      <ul className="events">
-        <li
-          style={{
-            background: "#039be5",
-          }}
-          onClick={handleViewMoreAppointments}
-        >
-          <span>{`${listAppointments.length} appointments`}</span>
-        </li>
-      </ul>
-    );
+  if (listAppointments.length === 0) {
+    return <></>;
   }
+
   return (
     <>
-      <ul className={`events ${!isCollapse && `no-collapse-event`}`}>
-        {isCollapse && listAppointments?.length > 3 ? (
-          <>
-            {listAppointments.slice(0, 2).map((item) => (
-              <li
-                key={item._id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleViewAppointmentDetails(item);
-                }}
-              >
-                <span
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {allSlots[Number(item.selectedSlot)]}
-                </span>
-                {` ${item.firstName} ${item.lastName}`}
-              </li>
-            ))}
-            <li
-              className="viewmore"
-              key={listAppointments[3]._id}
-              onClick={handleViewMoreAppointments}
+      <ul className="appointmentlist">
+        {listAppointments.map((item) => (
+          <li
+            key={item._id}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleViewAppointmentDetails(item);
+            }}
+          >
+            <span
+              style={{
+                fontSize: 14,
+              }}
             >
-              {listAppointments.length - 2} more
-            </li>
-          </>
-        ) : (
-          <>
-            {listAppointments.map((item) => (
-              <li
-                key={item._id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleViewAppointmentDetails(item);
-                }}
-              >
-                <span
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {allSlots[Number(item.selectedSlot)]}
-                </span>
-                {` ${item.firstName} ${item.lastName} `}
-                <span
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  {item.person}
-                </span>{" "}
-                persons
-              </li>
-            ))}
-          </>
-        )}
+              {allSlots[Number(item.selectedSlot)]}
+              {` ${item.firstName} ${item.lastName}, `}
+              {`${item.person} `}
+              persons
+            </span>
+          </li>
+        ))}
       </ul>
     </>
   );

@@ -1,6 +1,10 @@
 import dayjs, { Dayjs } from "dayjs";
 
-export { monthsShort, allSlots } from "./date.constants";
+export {
+  monthsShort,
+  allSlots,
+  dateToShowDetailsArray,
+} from "./date.constants";
 export { appointmentMapping } from "./appointments";
 /**
  * @params : month and year (WIP)

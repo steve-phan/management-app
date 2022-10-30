@@ -115,9 +115,17 @@
   z-index: -1;
 }
 
+div.datacell-appointments,
 ul.events {
   padding-left: 0;
   z-index: 20;
+}
+div.datacell-appointments .appointmentlist {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+div.datacell-appointments .appointmentlist li {
+  margin-bottom: 4px;
 }
 
 ul.events li {
@@ -133,22 +141,36 @@ ul.events li {
   overflow: hidden;
 }
 
-ul.events .viewmore {
-  /* font-weight: bold;
-  color: burlywood; */
-  background: #ffffff;
+.datacell-appointments .viewmore {
   color: #3c4043;
-  font-weight: bold;
+  padding: 0 6px;
 }
 
-ul.events.no-collapse-event {
+ul.appointmentlist {
   padding-bottom: 2em;
-  max-height: 70vh;
-  overflow-y: auto;
+  padding-left: 0;
 }
-ul.events.no-collapse-event li {
+
+ul.appointmentlist li {
+  font-size: 13px;
+  background: #009689;
+  color: #fff;
+  border-radius: 4px;
+  text-align: left;
+  padding: 0px 6px;
+  /* margin-top: 6px; */
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+ul.appointmentlist li span {
+  display: block;
+  overflow: hidden;
+}
+/* ul.events.no-collapse-event li {
   margin-top: 6px;
   padding: 2px;
   font-size: 14px;
   cursor: pointer;
-}
+} */
