@@ -4,7 +4,7 @@ import { Dayjs } from "dayjs";
 
 import { Col, Radio, Row, Select, Typography } from "antd";
 
-import { monthsShort } from "../shared/custom-dayjs";
+import { monthsShort } from "../shared/data-transform";
 
 export interface IHeaderCalendarProps {
   value: Dayjs;

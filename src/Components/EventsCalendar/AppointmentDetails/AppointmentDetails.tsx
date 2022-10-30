@@ -13,7 +13,7 @@ import { IAppointment } from "src/@types";
 import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
 import { toggleAppointMentDetailsModal } from "src/store";
 import { useAppSelector } from "src/store/hooks";
-import { allSlots } from "src/Components/shared/custom-dayjs";
+import { allSlots } from "src/Components/shared/data-transform";
 
 export const AppointmentDetails = () => {
   const { open, appointment } = useAppSelector((state) => ({

@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
-import { allSlots } from "src/Components/shared/custom-dayjs";
+import { allSlots } from "src/Components/shared/data-transform";
 import { setAppointmentsList, toggleAddNewAppointmentModal } from "src/store";
 import { useAppDispatch, useAppSelector } from "src/store/hooks";
 

@@ -8,7 +8,7 @@ import { useGetAllAppointments } from "src/hooks";
 
 import { DataCell } from "./DataCell";
 import { HeaderCalendar } from "./HeaderCalendar";
-import { getCurrentMonth } from "../shared/custom-dayjs";
+import { getCurrentMonth } from "../shared/data-transform";
 import { AppointmentDetails } from "./AppointmentDetails/AppointmentDetails";
 import { useAppDispatch, useAppSelector } from "src/store/hooks";
 import { ViewMoreAppointments } from "./ViewMoreAppointments/ViewMoreAppointments";

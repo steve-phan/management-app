@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { IAppointment } from "src/@types";
-import { allSlots } from "src/Components/shared/custom-dayjs";
+import { allSlots } from "src/Components/shared/data-transform";
 import {
   setDataAppointMentDetailsModal,
   setDataViewMoreAppointMentsModal,
@@ -22,10 +22,6 @@ export const AppointmentList = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const sortedAppointments = [...listAppointments].sort((a, b) => {
-    return Number(a.selectedSlot) - Number(b.selectedSlot);
-  });
-
   const handleViewAppointmentDetails = (item: IAppointment) => {
     dispatch(setDataAppointMentDetailsModal(item));
     dispatch(toggleAppointMentDetailsModal(true));
@@ -35,7 +31,7 @@ export const AppointmentList = ({
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    dispatch(setDataViewMoreAppointMentsModal(sortedAppointments));
+    dispatch(setDataViewMoreAppointMentsModal(listAppointments));
     dispatch(toggleViewMoreAppointmentModal(true));
   };
   const dateToShowDetailsArray = [
@@ -61,9 +57,9 @@ export const AppointmentList = ({
   return (
     <>
       <ul className={`events ${!isCollapse && `no-collapse-event`}`}>
-        {isCollapse && sortedAppointments?.length > 3 ? (
+        {isCollapse && listAppointments?.length > 3 ? (
           <>
-            {sortedAppointments.slice(0, 2).map((item) => (
+            {listAppointments.slice(0, 2).map((item) => (
               <li
                 key={item._id}
                 onClick={(e) => {
@@ -83,15 +79,15 @@ export const AppointmentList = ({
             ))}
             <li
               className="viewmore"
-              key={sortedAppointments[3]._id}
+              key={listAppointments[3]._id}
               onClick={handleViewMoreAppointments}
             >
-              {sortedAppointments.length - 2} more
+              {listAppointments.length - 2} more
             </li>
           </>
         ) : (
           <>
-            {sortedAppointments.map((item) => (
+            {listAppointments.map((item) => (
               <li
                 key={item._id}
                 onClick={(e) => {

@@ -1,10 +1,9 @@
-import { Badge, Card } from "antd";
-import dayjs, { Dayjs } from "dayjs";
-import { NotificationOutlined } from "@ant-design/icons";
+import { Dayjs } from "dayjs";
+import { useMemo } from "react";
 
 import { IAppointment } from "src/@types";
 
-import { appointmentMapping, getDate } from "../shared/custom-dayjs";
+import { appointmentMapping } from "../shared/data-transform";
 import { AppointmentList } from "./AppointmentList/AppointmentList";
 
 export const DataCell = ({
@@ -16,9 +15,10 @@ export const DataCell = ({
   appointments: IAppointment[];
   rangeQuery: string;
 }) => {
-  const dayObj = appointmentMapping(appointments);
-  const date = getDate(value.format());
-  const listAppointments = dayObj[date] as IAppointment[];
+  const listAppointments = useMemo(
+    () => appointmentMapping(appointments, value),
+    []
+  );
 
   if (!listAppointments) {
     return <></>;
