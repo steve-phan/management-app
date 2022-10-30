@@ -45,13 +45,14 @@ export const EventsCalendar = ({
   }, [rangeQuery]);
 
   const handleAddNewAppointment = (
-    e: React.MouseEvent<HTMLElement, MouseEvent>
+    e: React.MouseEvent<HTMLElement, MouseEvent>,
+    date: string
   ) => {
     e.stopPropagation();
     dispatch(
       toggleAddNewAppointmentModal({
         open: true,
-        date: dayjs().format(),
+        date,
       })
     );
   };
@@ -74,7 +75,9 @@ export const EventsCalendar = ({
           return (
             <div
               className="ant-picker-cell-inner ant-picker-calendar-date"
-              onClick={handleAddNewAppointment}
+              onClick={(e) =>
+                handleAddNewAppointment(e, value.format("YYYY-MM-DD"))
+              }
             >
               <div className="ant-picker-calendar-date-value">
                 {value.date()}
