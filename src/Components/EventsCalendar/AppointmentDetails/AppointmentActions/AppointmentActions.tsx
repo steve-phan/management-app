@@ -9,6 +9,7 @@ import {
   setAppointmentsList,
   setDataViewMoreAppointMentsModal,
   toggleAppointMentDetailsModal,
+  toggleEditAppointMentDetailsModal,
 } from "src/store";
 
 export const AppointmentActions = () => {
@@ -48,6 +49,10 @@ export const AppointmentActions = () => {
     setSubmitDelete(true);
   };
 
+  const handleEdit = () => {
+    dispatch(toggleEditAppointMentDetailsModal(true));
+  };
+
   return (
     <Row
       justify="end"
@@ -57,7 +62,7 @@ export const AppointmentActions = () => {
         marginTop: -16,
       }}
     >
-      <span className="appointment-action">
+      <span onClick={handleEdit} className="appointment-action">
         <EditOutlined size={16} />
       </span>
       <Popconfirm

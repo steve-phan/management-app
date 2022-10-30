@@ -10,6 +10,7 @@ export interface IAppModalProps {
   children: JSX.Element;
   showModalFooter?: boolean;
   onOk?: () => void;
+  onCancel?: () => void;
   width?: number;
 }
 
@@ -21,6 +22,7 @@ export const AppModal = ({
   showModalFooter = false,
   onOk = () => {},
   width = 520,
+  onCancel,
 }: IAppModalProps) => {
   const dispatch = useAppDispatch();
 
@@ -28,6 +30,9 @@ export const AppModal = ({
     e.stopPropagation();
 
     dispatch(toggleModal(false));
+    if (onCancel) {
+      onCancel();
+    }
   };
   const handleOk = () => {
     onOk();

@@ -48,7 +48,6 @@ export const HeaderCalendar = ({
       </Select.Option>
     );
   }
-  console.log({ value: value.format() });
   return (
     <div
       style={{

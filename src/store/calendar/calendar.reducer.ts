@@ -27,6 +27,7 @@ const employeeSlice = createSlice({
       APPOINTMENT_DETAILS: {
         open: false,
         data: undefined,
+        editable: false,
       },
       VIEW_MORE_APPOINTMENTS: {
         open: false,
@@ -46,6 +47,9 @@ const employeeSlice = createSlice({
   reducers: {
     toggleAppointMentDetailsModal(state, action) {
       state.calendarModal.APPOINTMENT_DETAILS.open = action.payload;
+    },
+    toggleEditAppointMentDetailsModal(state, action) {
+      state.calendarModal.APPOINTMENT_DETAILS.editable = action.payload;
     },
     toggleViewMoreAppointmentModal(state, action) {
       state.calendarModal.VIEW_MORE_APPOINTMENTS.open = action.payload;
@@ -78,6 +82,7 @@ const employeeSlice = createSlice({
 
 export const {
   toggleAppointMentDetailsModal,
+  toggleEditAppointMentDetailsModal,
   toggleViewMoreAppointmentModal,
   toggleAddNewAppointmentModal,
   setDataAppointMentDetailsModal,

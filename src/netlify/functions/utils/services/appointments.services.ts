@@ -16,7 +16,6 @@ export class AppointmentServices {
       require,
       shopId,
     } = appointment;
-    console.log({ appointment });
     const defaultDb = await connectMongoDB();
     const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
     const Appointment = shopDb.model("Appointment", appointmentSchema);
@@ -65,10 +64,10 @@ export class AppointmentServices {
     const currentDateQuery = dayjs(rangeQuery).date();
 
     const startRangeQuery = dayjs(rangeQuery)
-      .add(-(currentDateQuery + 7), "days")
+      .add(-(currentDateQuery + 30), "days")
       .format("YYYY-MM-DD");
     const endRangeQuery = dayjs(rangeQuery)
-      .add(currentDateQuery + 7, "days")
+      .add(currentDateQuery + 30, "days")
       .format("YYYY-MM-DD");
 
     return await Appointment.find({

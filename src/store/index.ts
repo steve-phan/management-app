@@ -18,6 +18,7 @@ export {
 
 export {
   toggleAppointMentDetailsModal,
+  toggleEditAppointMentDetailsModal,
   toggleViewMoreAppointmentModal,
   toggleAddNewAppointmentModal,
   setDataAppointMentDetailsModal,
