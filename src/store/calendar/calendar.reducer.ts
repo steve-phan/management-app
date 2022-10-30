@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import dayjs from "dayjs";
 
 import { ROLE } from "src/@types/Employee.types";
 import { IEmployeeInfo } from "src/apis/API";
@@ -38,6 +39,7 @@ const employeeSlice = createSlice({
       },
     },
     appointmentsList: [],
+    appointmentRangeQuery: dayjs().format(),
     allEmployees: [] as IEmployeeInfo[],
     activeEmployee: activeEmployeeDefault,
   },
@@ -65,6 +67,9 @@ const employeeSlice = createSlice({
     setAppointmentsList(state, action) {
       state.appointmentsList = action.payload;
     },
+    setAppointmentRangeQuery(state, action) {
+      state.appointmentRangeQuery = action.payload;
+    },
     setAllEmployees(state, action) {
       state.allEmployees = action.payload;
     },
@@ -79,6 +84,7 @@ export const {
   setDataViewMoreAppointMentsModal,
   setDataAddNewAppointMentModal,
   setAppointmentsList,
+  setAppointmentRangeQuery,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

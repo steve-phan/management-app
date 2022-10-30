@@ -4,7 +4,7 @@ import { Modal } from "antd";
 import { useAppDispatch } from "src/store/hooks";
 
 export interface IAppModalProps {
-  title: string;
+  title: React.ReactNode;
   open: boolean;
   toggleModal: ActionCreatorWithPayload<any, string>;
   children: JSX.Element;

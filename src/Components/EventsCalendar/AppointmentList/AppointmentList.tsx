@@ -7,25 +7,24 @@ import {
 import { useAppDispatch } from "src/store/hooks";
 
 export const AppointmentList = ({
-  listAppointments,
+  appointmentsList,
 }: {
-  listAppointments: IAppointment[];
+  appointmentsList: IAppointment[];
 }) => {
   const dispatch = useAppDispatch();
-
   const handleViewAppointmentDetails = (item: IAppointment) => {
     dispatch(setDataAppointMentDetailsModal(item));
     dispatch(toggleAppointMentDetailsModal(true));
   };
 
-  if (listAppointments.length === 0) {
+  if (appointmentsList.length === 0) {
     return <></>;
   }
 
   return (
     <>
       <ul className="appointmentlist">
-        {listAppointments.map((item) => (
+        {appointmentsList.map((item) => (
           <li
             key={item._id}
             onClick={(e) => {

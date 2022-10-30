@@ -1,53 +1,61 @@
-import { useState } from "react";
 import { Spin } from "antd";
 import generateCalendar from "antd/es/calendar/generateCalendar";
 import dayjs, { Dayjs } from "dayjs";
 import dayjsGenerateConfig from "rc-picker/lib/generate/dayjs";
+import React, { useEffect, useState } from "react";
 
-import { useGetAllAppointments } from "src/hooks";
+import { IAppointment } from "src/@types";
+import {
+  setAppointmentRangeQuery,
+  toggleAddNewAppointmentModal,
+} from "src/store";
+import { useAppDispatch } from "src/store/hooks";
 
+import { getCurrentMonth } from "../shared/data-transform";
 import { DataCell } from "./DataCell";
 import { HeaderCalendar } from "./HeaderCalendar";
-import { getCurrentMonth } from "../shared/data-transform";
-import { AppointmentDetails } from "./AppointmentDetails/AppointmentDetails";
-import { useAppDispatch, useAppSelector } from "src/store/hooks";
-import { ViewMoreAppointments } from "./ViewMoreAppointments/ViewMoreAppointments";
-import { toggleAddNewAppointmentModal } from "src/store";
-import { AddNewAppointment } from "./AddNewAppointment/AddNewAppointment";
 
 const Calendar = generateCalendar<Dayjs>(dayjsGenerateConfig);
 
-export const EventsCalendar = (): JSX.Element => {
+export interface IEventsCalendar {
+  data: any;
+  isLoading: boolean;
+  appointmentsList: IAppointment[];
+  rangeQuery: string;
+}
+
+export const EventsCalendar = ({
+  data,
+  isLoading,
+  appointmentsList,
+}: // rangeQuery,
+IEventsCalendar): JSX.Element => {
   const [rangeQuery, setRangeQuery] = useState(dayjs().format());
   const dispatch = useAppDispatch();
-  const { data, isLoading } = useGetAllAppointments(rangeQuery);
-  const {
-    appointmentDetailsModal,
-    viewMoreAppointmentsModal,
-    addNewAppointment,
-    appointmentsList,
-  } = useAppSelector((state) => ({
-    appointmentsList: state.calendar.appointmentsList,
-    appointmentDetailsModal:
-      state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
-    viewMoreAppointmentsModal:
-      state.calendar.calendarModal.VIEW_MORE_APPOINTMENTS.open,
-    addNewAppointment: state.calendar.calendarModal.ADD_NEW_APPOINTMENT.open,
-  }));
 
   const handleChange = (event: Dayjs) => {
     setRangeQuery(event.format());
   };
+  useEffect(() => {
+    dispatch(setAppointmentRangeQuery(rangeQuery));
+  }, [rangeQuery]);
 
+  const handleAddNewAppointment = (
+    e: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    dispatch(
+      toggleAddNewAppointmentModal({
+        open: true,
+        date: dayjs().format(),
+      })
+    );
+  };
   if (isLoading && rangeQuery === getCurrentMonth() && !data) {
     return <Spin />;
   }
-
   return (
     <>
-      {appointmentDetailsModal && <AppointmentDetails />}
-      {viewMoreAppointmentsModal && <ViewMoreAppointments />}
-      {addNewAppointment && <AddNewAppointment />}
       <Calendar
         onChange={handleChange}
         className="bookable24"
@@ -55,14 +63,7 @@ export const EventsCalendar = (): JSX.Element => {
           return (
             <div
               className="ant-picker-cell-inner ant-picker-calendar-date"
-              onClick={() => {
-                dispatch(
-                  toggleAddNewAppointmentModal({
-                    open: true,
-                    date: value.format(),
-                  })
-                );
-              }}
+              onClick={handleAddNewAppointment}
             >
               <div className="ant-picker-calendar-date-value">
                 {value.date()}
@@ -92,3 +93,5 @@ export const EventsCalendar = (): JSX.Element => {
     </>
   );
 };
+
+export const MemoEventsCalendar = React.memo(EventsCalendar);

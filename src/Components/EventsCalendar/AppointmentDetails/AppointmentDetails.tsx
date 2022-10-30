@@ -15,6 +15,8 @@ import { toggleAppointMentDetailsModal } from "src/store";
 import { useAppSelector } from "src/store/hooks";
 import { allSlots } from "src/Components/shared/data-transform";
 
+import { AppointmentActions } from "./AppointmentActions/AppointmentActions";
+
 export const AppointmentDetails = () => {
   const { open, appointment } = useAppSelector((state) => ({
     open: state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
@@ -32,11 +34,12 @@ export const AppointmentDetails = () => {
     require,
     email,
     phone,
+    _id,
   } = appointment as IAppointment;
   return (
     <AppModal
       toggleModal={toggleAppointMentDetailsModal}
-      title="Appointment Details"
+      title={<AppointmentActions />}
       open={open}
     >
       <div

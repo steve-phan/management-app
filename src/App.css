@@ -163,10 +163,10 @@ ul.appointmentlist li {
   border-radius: 4px;
   text-align: left;
   padding: 0px 6px;
-  /* margin-top: 6px; */
   margin-bottom: 8px;
   white-space: nowrap;
   overflow: hidden;
+  cursor: pointer;
 }
 
 ul.appointmentlist li span {

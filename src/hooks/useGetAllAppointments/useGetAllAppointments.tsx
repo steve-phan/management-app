@@ -8,7 +8,7 @@ export const useGetAllAppointments = (rangeQuery: string) => {
   const dispatch = useAppDispatch();
   const { data, isLoading } = useQuery(
     [
-      "checkAuth",
+      "appointment/get-all-appointments",
       // Dont refecht data in the same month selected
       rangeQuery.substring(0, 7),
     ],
@@ -21,7 +21,6 @@ export const useGetAllAppointments = (rangeQuery: string) => {
       });
     }
   );
-
   useEffect(() => {
     if (!isLoading && data?.data?.allAppointments) {
       dispatch(setAppointmentsList(data?.data?.allAppointments));

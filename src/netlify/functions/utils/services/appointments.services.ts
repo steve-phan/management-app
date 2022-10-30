@@ -16,6 +16,7 @@ export class AppointmentServices {
       require,
       shopId,
     } = appointment;
+    console.log({ appointment });
     const defaultDb = await connectMongoDB();
     const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
     const Appointment = shopDb.model("Appointment", appointmentSchema);
@@ -35,6 +36,20 @@ export class AppointmentServices {
 
     return await this.getAllAppointments({ shopId, rangeQuery: selectedDate });
   }
+  static async deleteAppointment({ appointment }: { appointment: any }) {
+    const { selectedDate, shopId, _id } = appointment;
+    const defaultDb = await connectMongoDB();
+
+    const shopDb = defaultDb.connection.useDb(shopId || "shopDemoId");
+    const Appointment = shopDb.model("Appointment", appointmentSchema);
+    await Appointment.findOneAndUpdate(
+      { _id },
+      { status: true },
+      { new: true }
+    );
+
+    return await this.getAllAppointments({ shopId, rangeQuery: selectedDate });
+  }
 
   static async getAllAppointments({
     shopId,
@@ -50,10 +65,10 @@ export class AppointmentServices {
     const currentDateQuery = dayjs(rangeQuery).date();
 
     const startRangeQuery = dayjs(rangeQuery)
-      .add(-(currentDateQuery + 30), "days")
+      .add(-(currentDateQuery + 7), "days")
       .format("YYYY-MM-DD");
     const endRangeQuery = dayjs(rangeQuery)
-      .add(currentDateQuery + 30, "days")
+      .add(currentDateQuery + 7, "days")
       .format("YYYY-MM-DD");
 
     return await Appointment.find({

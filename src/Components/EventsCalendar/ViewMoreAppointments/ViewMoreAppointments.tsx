@@ -26,7 +26,7 @@ export const ViewMoreAppointments = () => {
       open={open}
       width={360}
     >
-      <AppointmentList listAppointments={appointments} />
+      <AppointmentList appointmentsList={appointments} />
     </AppModal>
   );
 };

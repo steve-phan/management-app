@@ -1,4 +1,5 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
+import React from "react";
 import { useMemo } from "react";
 
 import { IAppointment } from "src/@types";
@@ -24,25 +25,25 @@ export const DataCell = ({
   rangeQuery: string;
 }) => {
   const dispatch = useAppDispatch();
-  const listAppointments = useMemo(
+  const appointmentsList = useMemo(
     () => appointmentMapping(appointments, value),
-    [appointments]
+    [appointments, value]
   );
   const handleViewMoreAppointments = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    dispatch(setDataViewMoreAppointMentsModal(listAppointments));
+    dispatch(setDataViewMoreAppointMentsModal(appointmentsList));
     dispatch(toggleViewMoreAppointmentModal(true));
   };
 
-  if (!listAppointments) {
+  if (!appointmentsList) {
     return <></>;
   }
-
+  console.log("moreeeeee");
   if (
     value &&
-    listAppointments.length > 0 &&
+    appointmentsList.length > 0 &&
     !dateToShowDetailsArray.includes(value?.format("DD/MM/YYYY"))
   ) {
     return (
@@ -54,26 +55,26 @@ export const DataCell = ({
           }}
           onClick={handleViewMoreAppointments}
         >
-          <span>{`${listAppointments.length} appointments`}</span>
+          <span>{`${appointmentsList.length} appointments`}</span>
         </li>
       </ul>
     );
   }
   return (
     <div className="datacell-appointments">
-      {listAppointments?.length > 3 ? (
+      {appointmentsList?.length > 3 ? (
         <>
-          <AppointmentList listAppointments={listAppointments.slice(0, 2)} />
+          <AppointmentList appointmentsList={appointmentsList.slice(0, 2)} />
           <span
             className="viewmore"
-            key={listAppointments[3]._id}
+            key={appointmentsList[3]._id}
             onClick={handleViewMoreAppointments}
           >
-            {listAppointments.length - 2} more
+            {appointmentsList.length - 2} more
           </span>
         </>
       ) : (
-        <AppointmentList listAppointments={listAppointments} />
+        <AppointmentList appointmentsList={appointmentsList} />
       )}
     </div>
   );

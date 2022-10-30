@@ -24,6 +24,7 @@ export {
   setDataViewMoreAppointMentsModal,
   setDataAddNewAppointMentModal,
   setAppointmentsList,
+  setAppointmentRangeQuery,
 } from "./calendar/calendar.reducer";
 
 export default store;

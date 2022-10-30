@@ -5,9 +5,9 @@ import { AppointmentServices } from "../utils/services/appointments.services";
 export const handler: Handler = async (event, context) => {
   try {
     const appointment = JSON.parse(event.body!);
-    const allAppointments = await AppointmentServices.addNewAppointment({
-      appointment,
-    });
+    const allAppointments = await AppointmentServices.deleteAppointment(
+      appointment
+    );
     return {
       statusCode: 200,
       body: JSON.stringify({

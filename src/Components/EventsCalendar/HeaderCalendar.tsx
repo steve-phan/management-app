@@ -11,7 +11,7 @@ export interface IHeaderCalendarProps {
   type: CalendarMode;
   onChange: (date: Dayjs) => void;
   onTypeChange: (type: CalendarMode) => void;
-  isLoading: boolean;
+  isLoading?: boolean;
   totalAppointments?: number;
 }
 
@@ -48,6 +48,7 @@ export const HeaderCalendar = ({
       </Select.Option>
     );
   }
+  console.log({ value: value.format() });
   return (
     <div
       style={{
