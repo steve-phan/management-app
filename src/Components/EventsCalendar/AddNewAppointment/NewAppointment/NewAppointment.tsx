@@ -17,13 +17,15 @@ export const NewAppointment = () => {
     selectedDate: state.calendar.calendarModal.ADD_NEW_APPOINTMENT.date,
   }));
   const { isLoading, error, data } = useQuery(
-    ["appointment/add-new-appointment", appointment],
+    ["appointment/add-new-appointment", appointment, submitted],
     async () => {
-      return await axios.post("/.netlify/functions/add-new-appointment", {
-        ...appointment,
-        selectedDate,
-        shopId: "gao-vegan0410940",
-      });
+      if (submitted) {
+        return await axios.post("/.netlify/functions/add-new-appointment", {
+          ...appointment,
+          selectedDate,
+          shopId: "gao-vegan0410940",
+        });
+      }
     },
     {
       retry: 1,
@@ -34,7 +36,6 @@ export const NewAppointment = () => {
   const onFinish = (values: any) => {
     setSubmitted(true);
     setAppointment(values);
-    console.log({ values });
   };
 
   useEffect(() => {

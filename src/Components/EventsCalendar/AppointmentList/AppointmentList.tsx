@@ -1,3 +1,4 @@
+import dayjs, { Dayjs } from "dayjs";
 import { IAppointment } from "src/@types";
 import { allSlots } from "src/Components/shared/custom-dayjs";
 import {
@@ -11,9 +12,13 @@ import { useAppDispatch } from "src/store/hooks";
 export const AppointmentList = ({
   listAppointments,
   isCollapse,
+  rangeQuery,
+  value,
 }: {
   listAppointments: IAppointment[];
+  rangeQuery?: string;
   isCollapse?: boolean;
+  value?: Dayjs;
 }) => {
   const dispatch = useAppDispatch();
 
@@ -33,6 +38,26 @@ export const AppointmentList = ({
     dispatch(setDataViewMoreAppointMentsModal(sortedAppointments));
     dispatch(toggleViewMoreAppointmentModal(true));
   };
+  const dateToShowDetailsArray = [
+    dayjs().format("DD/MM/YYYY"),
+    dayjs().add(1, "day").format("DD/MM/YYYY"),
+    dayjs().add(2, "day").format("DD/MM/YYYY"),
+  ];
+
+  if (value && !dateToShowDetailsArray.includes(value?.format("DD/MM/YYYY"))) {
+    return (
+      <ul className="events">
+        <li
+          style={{
+            background: "#039be5",
+          }}
+          onClick={handleViewMoreAppointments}
+        >
+          <span>{`${listAppointments.length} appointments`}</span>
+        </li>
+      </ul>
+    );
+  }
   return (
     <>
       <ul className={`events ${!isCollapse && `no-collapse-event`}`}>
@@ -81,7 +106,15 @@ export const AppointmentList = ({
                 >
                   {allSlots[Number(item.selectedSlot)]}
                 </span>
-                {` ${item.firstName} ${item.lastName}`}
+                {` ${item.firstName} ${item.lastName} `}
+                <span
+                  style={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  {item.person}
+                </span>{" "}
+                persons
               </li>
             ))}
           </>

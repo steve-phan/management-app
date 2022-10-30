@@ -42,6 +42,7 @@ export const EventsCalendar = (): JSX.Element => {
   if (isLoading && rangeQuery === getCurrentMonth() && !data) {
     return <Spin />;
   }
+
   return (
     <>
       {appointmentDetailsModal && <AppointmentDetails />}
@@ -67,7 +68,11 @@ export const EventsCalendar = (): JSX.Element => {
                 {value.date()}
               </div>
               <div className="ant-picker-calendar-date-content">
-                <DataCell value={value} appointments={appointmentsList} />
+                <DataCell
+                  value={value}
+                  appointments={appointmentsList}
+                  rangeQuery={rangeQuery}
+                />
               </div>
             </div>
           );

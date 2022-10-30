@@ -1,4 +1,6 @@
-import { Dayjs } from "dayjs";
+import { Badge, Card } from "antd";
+import dayjs, { Dayjs } from "dayjs";
+import { NotificationOutlined } from "@ant-design/icons";
 
 import { IAppointment } from "src/@types";
 
@@ -8,9 +10,11 @@ import { AppointmentList } from "./AppointmentList/AppointmentList";
 export const DataCell = ({
   value,
   appointments,
+  rangeQuery,
 }: {
   value: Dayjs;
   appointments: IAppointment[];
+  rangeQuery: string;
 }) => {
   const dayObj = appointmentMapping(appointments);
   const date = getDate(value.format());
@@ -20,5 +24,12 @@ export const DataCell = ({
     return <></>;
   }
 
-  return <AppointmentList listAppointments={listAppointments} isCollapse />;
+  return (
+    <AppointmentList
+      listAppointments={listAppointments}
+      isCollapse
+      rangeQuery={rangeQuery}
+      value={value}
+    />
+  );
 };
