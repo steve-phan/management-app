@@ -43,8 +43,8 @@ export const afternoonSlots = [
 
 export const allSlots = [...morningSlots, ...afternoonSlots];
 export const dateToShowDetailsArray = [
-  dayjs().format("DD/MM/YYYY"),
-  dayjs().add(1, "day").format("DD/MM/YYYY"),
-  dayjs().add(2, "day").format("DD/MM/YYYY"),
-  dayjs().add(3, "day").format("DD/MM/YYYY"),
+  dayjs().format("YYYY-MM-DD"),
+  dayjs().add(1, "day").format("YYYY-MM-DD"),
+  dayjs().add(2, "day").format("YYYY-MM-DD"),
+  dayjs().add(3, "day").format("YYYY-MM-DD"),
 ];

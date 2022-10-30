@@ -11,8 +11,13 @@ import {
 } from "src/store";
 import { useAppDispatch } from "src/store/hooks";
 
-import { getCurrentMonth } from "../shared/data-transform";
-import { DataCell } from "./DataCell";
+import {
+  appointmentMapping,
+  dateToShowDetailsArray,
+  getCurrentMonth,
+} from "../shared/data-transform";
+import { DataCell } from "./DataCell/DataCell";
+import { DataCellTotal } from "./DataCell/DataCellTotal";
 import { HeaderCalendar } from "./HeaderCalendar";
 
 const Calendar = generateCalendar<Dayjs>(dayjsGenerateConfig);
@@ -28,9 +33,8 @@ export const EventsCalendar = ({
   data,
   isLoading,
   appointmentsList,
-}: // rangeQuery,
-IEventsCalendar): JSX.Element => {
-  const [rangeQuery, setRangeQuery] = useState(dayjs().format());
+}: IEventsCalendar): JSX.Element => {
+  const [rangeQuery, setRangeQuery] = useState(dayjs().format("YYYY-MM-DD"));
   const dispatch = useAppDispatch();
 
   const handleChange = (event: Dayjs) => {
@@ -51,6 +55,7 @@ IEventsCalendar): JSX.Element => {
       })
     );
   };
+
   if (isLoading && rangeQuery === getCurrentMonth() && !data) {
     return <Spin />;
   }
@@ -60,6 +65,12 @@ IEventsCalendar): JSX.Element => {
         onChange={handleChange}
         className="bookable24"
         dateFullCellRender={(value) => {
+          const appointments = appointmentMapping(appointmentsList, value);
+          const isDateToShowAppointments =
+            value &&
+            appointmentsList.length > 0 &&
+            !dateToShowDetailsArray.includes(value?.format("YYYY-MM-DD"));
+
           return (
             <div
               className="ant-picker-cell-inner ant-picker-calendar-date"
@@ -69,11 +80,14 @@ IEventsCalendar): JSX.Element => {
                 {value.date()}
               </div>
               <div className="ant-picker-calendar-date-content">
-                <DataCell
-                  value={value}
-                  appointments={appointmentsList}
-                  rangeQuery={rangeQuery}
-                />
+                {isDateToShowAppointments ? (
+                  <DataCellTotal appointments={appointments} />
+                ) : (
+                  <DataCell
+                    appointments={appointments}
+                    rangeQuery={rangeQuery}
+                  />
+                )}
               </div>
             </div>
           );

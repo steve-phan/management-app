@@ -10,7 +10,7 @@ export const useGetAllAppointments = (rangeQuery: string) => {
     [
       "appointment/get-all-appointments",
       // Dont refecht data in the same month selected
-      rangeQuery.substring(0, 7),
+      rangeQuery,
     ],
     async () => {
       return await axios.get("/.netlify/functions/get-all-appointments", {

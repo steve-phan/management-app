@@ -7,9 +7,9 @@ import {
 import { useAppDispatch } from "src/store/hooks";
 
 export const AppointmentList = ({
-  appointmentsList,
+  appointments,
 }: {
-  appointmentsList: IAppointment[];
+  appointments: IAppointment[];
 }) => {
   const dispatch = useAppDispatch();
   const handleViewAppointmentDetails = (item: IAppointment) => {
@@ -17,14 +17,14 @@ export const AppointmentList = ({
     dispatch(toggleAppointMentDetailsModal(true));
   };
 
-  if (appointmentsList.length === 0) {
+  if (appointments.length === 0) {
     return <></>;
   }
 
   return (
     <>
       <ul className="appointmentlist">
-        {appointmentsList.map((item) => (
+        {appointments.map((item) => (
           <li
             key={item._id}
             onClick={(e) => {

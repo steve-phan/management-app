@@ -1,10 +1,11 @@
 import { Spin } from "antd";
 import dayjs from "dayjs";
-import React from "react";
+
 import { IAppointment } from "src/@types";
 import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
 import { toggleViewMoreAppointmentModal } from "src/store";
 import { useAppSelector } from "src/store/hooks";
+
 import { AppointmentList } from "../AppointmentList/AppointmentList";
 
 export const ViewMoreAppointments = () => {
@@ -26,7 +27,7 @@ export const ViewMoreAppointments = () => {
       open={open}
       width={360}
     >
-      <AppointmentList appointmentsList={appointments} />
+      <AppointmentList appointments={appointments} />
     </AppModal>
   );
 };
