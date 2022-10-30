@@ -94,6 +94,10 @@
   flex-grow: 0;
 }
 
+.bookable24 .ant-typography {
+  white-space: nowrap;
+}
+
 .bookable24 .ant-picker-calendar-date-value {
   text-align: center;
   font-size: 13px;
@@ -144,6 +148,7 @@ ul.events li {
 .datacell-appointments .viewmore {
   color: #3c4043;
   padding: 0 6px;
+  white-space: nowrap;
 }
 
 ul.appointmentlist {

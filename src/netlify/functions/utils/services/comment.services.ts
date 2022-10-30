@@ -24,9 +24,9 @@ export class CommentServices {
     const shopDb = defaultDb.connection.useDb(shopId);
     const Comment = shopDb.model("Comment", commentSchema);
 
-    const allComents = await Comment.find({ employeeId });
+    const allComments = await Comment.find({ employeeId });
 
-    return allComents[0];
+    return allComments[0];
   }
 
   static async addComment(commentInfo: IAddComment) {

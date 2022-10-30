@@ -20,8 +20,8 @@ export class CommentControler {
 
   static async addComment(req: Request, res: Response, next: NextFunction) {
     try {
-      const allComents = await CommentServices.addComment(req.body);
-      res.status(200).json({ allComents, message: "SUCCESS" });
+      const allComments = await CommentServices.addComment(req.body);
+      res.status(200).json({ allComments, message: "SUCCESS" });
     } catch (error) {
       next(error);
     }
