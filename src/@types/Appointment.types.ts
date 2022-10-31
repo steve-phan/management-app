@@ -16,4 +16,5 @@ export interface IAppointment extends ICustomer {
   __v?: number;
   _id?: string;
   canceled?: boolean;
+  shopId?: string;
 }

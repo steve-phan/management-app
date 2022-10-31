@@ -5,7 +5,7 @@ export {
   allSlots,
   dateToShowDetailsArray,
 } from "./date.constants";
-export { appointmentMapping } from "./appointments";
+export { sortAppointmentByTime, appointmentMapping } from "./appointments";
 /**
  * @params : month and year (WIP)
  * @returns : string syntax month-year to query data by mongodb

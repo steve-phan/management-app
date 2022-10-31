@@ -1,5 +1,8 @@
 import { IAppointment } from "src/@types";
-import { allSlots } from "src/Components/shared/data-transform";
+import {
+  allSlots,
+  sortAppointmentByTime,
+} from "src/Components/shared/data-transform";
 import {
   setDataAppointMentDetailsModal,
   toggleAppointMentDetailsModal,
@@ -26,7 +29,7 @@ export const AppointmentList = ({
   return (
     <>
       <ul className="appointmentlist">
-        {appointments.map((item) => (
+        {sortAppointmentByTime([...appointments]).map((item) => (
           <li
             key={item._id}
             onClick={(e) => {
