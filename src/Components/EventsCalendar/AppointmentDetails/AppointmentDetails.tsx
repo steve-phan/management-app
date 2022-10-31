@@ -1,46 +1,34 @@
-import { Form, Input, Select, Typography } from "antd";
 import {
-  TeamOutlined,
-  InfoCircleOutlined,
   CalendarOutlined,
+  ClockCircleOutlined,
+  InfoCircleOutlined,
   MailOutlined,
   PhoneOutlined,
-  ClockCircleOutlined,
+  TeamOutlined,
 } from "@ant-design/icons";
+import { Form, Input, Select, Typography } from "antd";
 import dayjs from "dayjs";
 
 import { IAppointment } from "src/@types";
-import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
-import {
-  setAppointmentsList,
-  setDataViewMoreAppointMentsModal,
-  toggleAppointMentDetailsModal,
-  toggleEditAppointMentDetailsModal,
-} from "src/store";
-import { useAppDispatch, useAppSelector } from "src/store/hooks";
 import { allSlots } from "src/Components/shared/data-transform";
+import { AppModal } from "src/Components/shared/UI/AppModal/AppModal";
+import { toggleAppointMentDetailsModal } from "src/store";
+import { useAppSelector } from "src/store/hooks";
 
+import { useEditAppointment } from "src/hooks";
 import { AppointmentActions } from "./AppointmentActions/AppointmentActions";
-import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import axios from "axios";
 
 export const AppointmentDetails = () => {
-  const [submitEdit, setSubmitEdit] = useState(false);
-  const [newPerson, setNewPerson] = useState(0);
-  const [newSlot, setNewSlot] = useState("");
-  const dispatch = useAppDispatch();
-  const { open, appointment, editable, appointmentsList } = useAppSelector(
-    (state) => ({
-      editable: state.calendar.calendarModal.APPOINTMENT_DETAILS.editable,
-      open: state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
-      appointment: state.calendar.calendarModal.APPOINTMENT_DETAILS.data as
-        | IAppointment
-        | undefined,
-      appointmentsList: state.calendar.calendarModal.VIEW_MORE_APPOINTMENTS
-        .data as unknown as IAppointment[],
-    })
-  );
+  const [form] = Form.useForm();
+
+  const { handleSubmitEdit, cancelEdit } = useEditAppointment();
+  const { open, appointment, editable } = useAppSelector((state) => ({
+    editable: state.calendar.calendarModal.APPOINTMENT_DETAILS.editable,
+    open: state.calendar.calendarModal.APPOINTMENT_DETAILS.open,
+    appointment: state.calendar.calendarModal.APPOINTMENT_DETAILS.data as
+      | IAppointment
+      | undefined,
+  }));
   const {
     firstName,
     lastName,
@@ -52,58 +40,19 @@ export const AppointmentDetails = () => {
     phone,
     _id,
   } = appointment as IAppointment;
-  const { data, isLoading, error } = useQuery(
-    ["appointment/edit-an-appointment", submitEdit],
-    async () => {
-      if (submitEdit && newPerson) {
-        return await axios.post("/.netlify/functions/edit-an-appointment", {
-          ...appointment,
-          selectedSlot: newSlot,
-          person: newPerson,
-          shopId: "gao-vegan0410940",
-        });
-      }
-    }
-  );
-
-  const [form] = Form.useForm();
-  const handleSubmitEdit = () => {
-    const newSlot = form.getFieldValue("selectedSlot");
-    const newPerson = form.getFieldValue("person");
-    setNewPerson(newPerson);
-    setNewSlot(newSlot);
-    setSubmitEdit(true);
+  const submitEdit = () => {
+    handleSubmitEdit({
+      newPerson: form.getFieldValue("person"),
+      newSlot: form.getFieldValue("selectedSlot"),
+    });
   };
-  const cancelEdit = () => {
-    dispatch(toggleEditAppointMentDetailsModal(false));
-  };
-
-  useEffect(() => {
-    if (submitEdit && !isLoading && !error && data?.data && appointment) {
-      const newAppointmentList = appointmentsList.map((item) => {
-        if (item._id === appointment._id) {
-          return {
-            ...item,
-            person: newPerson,
-            selectedSlot: newSlot,
-          };
-        }
-        return item;
-      });
-      dispatch(toggleEditAppointMentDetailsModal(false));
-      dispatch(toggleAppointMentDetailsModal(false));
-      dispatch(setDataViewMoreAppointMentsModal(newAppointmentList));
-      dispatch(setAppointmentsList(data?.data?.allAppointments));
-      setSubmitEdit(false);
-    }
-  }, [submitEdit, isLoading]);
 
   return (
     <AppModal
       toggleModal={toggleAppointMentDetailsModal}
       title={<AppointmentActions />}
       open={open}
-      onOk={handleSubmitEdit}
+      onOk={submitEdit}
       showModalFooter={editable}
       onCancel={cancelEdit}
     >
@@ -113,6 +62,7 @@ export const AppointmentDetails = () => {
         }}
       >
         <Form
+          preserve={false}
           layout="vertical"
           form={form}
           name="register"

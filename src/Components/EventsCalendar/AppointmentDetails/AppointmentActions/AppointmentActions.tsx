@@ -1,57 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import { useQuery } from "react-query";
-import axios from "axios";
-import { useAppDispatch, useAppSelector } from "src/store/hooks";
-import { IAppointment } from "src/@types";
-import { message, Popconfirm, Row } from "antd";
-import {
-  setAppointmentsList,
-  setDataViewMoreAppointMentsModal,
-  toggleAppointMentDetailsModal,
-  toggleEditAppointMentDetailsModal,
-} from "src/store";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Popconfirm, Row } from "antd";
+
+import { useDeleteAppointment } from "src/hooks";
 
 export const AppointmentActions = () => {
-  const [submitDelete, setSubmitDelete] = useState(false);
-  const dispatch = useAppDispatch();
-  const { appointment, appointmentsList } = useAppSelector((state) => ({
-    appointment: state.calendar.calendarModal.APPOINTMENT_DETAILS
-      .data as unknown as IAppointment,
-    appointmentsList: state.calendar.calendarModal.VIEW_MORE_APPOINTMENTS
-      .data as unknown as IAppointment[],
-  }));
-  const { data, isLoading, error } = useQuery(
-    ["appointment/delete-an-appointment", appointment, submitDelete],
-    async () => {
-      if (submitDelete && appointment) {
-        return await axios.post("/.netlify/functions/delete-an-appointment", {
-          appointment: { ...appointment, shopId: "gao-vegan0410940" },
-        });
-      }
-    }
-  );
-
-  useEffect(() => {
-    if (submitDelete && !isLoading && !error) {
-      message.success("Delete appointment successfully");
-      const newAppointmentList = appointmentsList.filter(
-        (item) => item._id !== appointment._id
-      );
-      dispatch(setDataViewMoreAppointMentsModal(newAppointmentList));
-      dispatch(setAppointmentsList(data?.data?.allAppointments));
-      dispatch(toggleAppointMentDetailsModal(false));
-      setSubmitDelete(false);
-    }
-  }, [submitDelete, isLoading]);
-
-  const confirm = (e: React.MouseEvent<HTMLElement>) => {
-    setSubmitDelete(true);
-  };
-
-  const handleEdit = () => {
-    dispatch(toggleEditAppointMentDetailsModal(true));
-  };
+  const { handleEdit, confirm } = useDeleteAppointment();
 
   return (
     <Row

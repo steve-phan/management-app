@@ -6,3 +6,5 @@ export { useEditEmployee } from "./useEditEmployee/useEditEmployee";
 export { useUploadCSVFileEmployee } from "./useUploadCSVFileEmployee/useUploadCSVFileEmployee";
 export { useEmployeeAddComment } from "./useEmployeeAddComment/useEmployeeAddComment";
 export { useGetAllAppointments } from "./useGetAllAppointments/useGetAllAppointments";
+export { useEditAppointment } from "./useEditAppointment/useEditAppointment";
+export { useDeleteAppointment } from "./useDeleteAppointment/useDeleteAppointment";
