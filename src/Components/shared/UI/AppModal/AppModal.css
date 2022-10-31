@@ -1,0 +1,4 @@
+.bookable24-appmodal .ant-modal-content {
+  max-height: 80vh;
+  overflow: auto;
+}

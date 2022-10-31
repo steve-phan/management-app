@@ -9,6 +9,7 @@ import {
 import { useAppDispatch } from "src/store/hooks";
 
 import { AppointmentList } from "../AppointmentList/AppointmentList";
+import "./DataCell.css";
 
 export const DataCell = ({
   // value,

@@ -6,6 +6,8 @@ import {
 } from "src/store";
 import { useAppDispatch } from "src/store/hooks";
 
+import "./AppointmentList.css";
+
 export const AppointmentList = ({
   appointments,
 }: {

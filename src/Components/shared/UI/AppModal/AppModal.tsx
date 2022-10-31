@@ -3,6 +3,8 @@ import { Modal } from "antd";
 
 import { useAppDispatch } from "src/store/hooks";
 
+import "./AppModal.css";
+
 export interface IAppModalProps {
   title: React.ReactNode;
   open: boolean;
@@ -12,6 +14,7 @@ export interface IAppModalProps {
   onOk?: () => void;
   onCancel?: () => void;
   width?: number;
+  height?: number;
 }
 
 export const AppModal = ({
@@ -23,6 +26,7 @@ export const AppModal = ({
   onOk = () => {},
   width = 520,
   onCancel,
+  height = 100,
 }: IAppModalProps) => {
   const dispatch = useAppDispatch();
 
@@ -40,6 +44,11 @@ export const AppModal = ({
 
   return (
     <Modal
+      style={{
+        height: height,
+        maxHeight: "80vh",
+      }}
+      className="bookable24-appmodal"
       width={width}
       title={title}
       open={open}
